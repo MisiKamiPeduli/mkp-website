@@ -1,13 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { twMerge } from "tailwind-merge";
 import { siteConfig } from "@/lib/site-config";
 
-export function Logo() {
+export function Logo({ className }: { className?: string }) {
   return (
     <Link
       href="/"
       aria-label={siteConfig.name}
-      className="flex items-center gap-2 text-foreground"
+      className={twMerge("flex items-center gap-2 text-foreground", className)}
     >
       <Image
         src="/logo.svg"
