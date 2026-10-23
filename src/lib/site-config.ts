@@ -6,6 +6,7 @@ export const siteConfig = {
   // TODO: real donation URL
   donateUrl: "https://kitabisa.com/campaign/misikamipeduli2024",
   instagramUrl: "https://www.instagram.com/misikamipeduli/",
+  contactEmail: "directors.mkp@gmail.com",
 };
 
 export type NavLink = {
