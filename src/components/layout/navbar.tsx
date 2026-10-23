@@ -32,7 +32,12 @@ export function Navbar() {
       }
     }
     function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpenDropdown(null);
+      if (event.key === "Escape") {
+        navRef.current
+          ?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]')
+          ?.focus();
+        setOpenDropdown(null);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscape);
@@ -98,6 +103,12 @@ export function Navbar() {
                               <li key={child.href}>
                                 <Link
                                   href={child.href}
+                                  onClick={() => {
+                                    navRef.current
+                                      ?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]')
+                                      ?.focus();
+                                    setOpenDropdown(null);
+                                  }}
                                   aria-current={active ? "page" : undefined}
                                   className={`relative block py-2 pl-6 pr-4 text-sm transition-colors hover:bg-muted ${
                                     active ? "font-medium" : ""
@@ -120,6 +131,7 @@ export function Navbar() {
                   ) : (
                     <Link
                       href={item.href}
+                      onClick={() => setOpenDropdown(null)}
                       aria-current={pathname === item.href ? "page" : undefined}
                       className="block py-2 text-[15px] font-medium"
                     >

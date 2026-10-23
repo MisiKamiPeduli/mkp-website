@@ -2,7 +2,7 @@
 
 import { ChevronDown, Mail, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { navItems, siteConfig } from "@/lib/site-config";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { Logo } from "./logo";
@@ -21,6 +21,8 @@ export function MobileMenu({
   onClose,
   onContact,
 }: MobileMenuProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [openSection, setOpenSection] = useState<string | null>(
     () =>
       navItems.find(
@@ -28,37 +30,46 @@ export function MobileMenu({
       )?.label ?? null,
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    // Native modal behavior keeps keyboard focus inside and makes the page inert.
+    // Closing the dialog restores focus to the element that opened it.
+    dialog.showModal();
+    closeButtonRef.current?.focus();
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
-    function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") onClose();
-    }
     const desktop = window.matchMedia("(min-width: 1024px)");
     function handleBreakpoint(event: MediaQueryListEvent) {
       if (event.matches) onClose();
     }
 
-    document.addEventListener("keydown", handleEscape);
     desktop.addEventListener("change", handleBreakpoint);
     return () => {
+      dialog.close();
       document.body.style.overflow = previousOverflow;
-      document.removeEventListener("keydown", handleEscape);
       desktop.removeEventListener("change", handleBreakpoint);
     };
   }, [onClose]);
 
   return (
-    <div
+    <dialog
+      ref={dialogRef}
       id={id}
-      className="fixed inset-0 z-50 flex flex-col bg-background lg:hidden"
+      aria-label="Main navigation menu"
+      onCancel={(event) => {
+        event.preventDefault();
+        onClose();
+      }}
+      className="fixed inset-x-0 top-0 bottom-auto m-0 flex max-h-dvh w-full max-w-none flex-col overflow-hidden rounded-b-2xl border-0 bg-background p-0 text-foreground shadow-xl backdrop:bg-black/40 lg:hidden"
     >
-      <div className="border-b border-border">
+      <div className="shrink-0 border-b border-border">
         <SiteContainer>
           <div className="flex h-16 items-center justify-between">
-            <Logo />
+            <Logo onClick={onClose} />
             <Button
+              ref={closeButtonRef}
               variant="ghost"
               size="icon"
               aria-label="Close menu"
@@ -71,7 +82,7 @@ export function MobileMenu({
         </SiteContainer>
       </div>
 
-      <nav aria-label="Main" className="flex-1 overflow-y-auto">
+      <nav aria-label="Main" className="min-h-0 overflow-y-auto overscroll-contain">
         <SiteContainer>
           <ul>
             {navItems.map((item) => {
@@ -86,27 +97,28 @@ export function MobileMenu({
                         onClick={() =>
                           setOpenSection(expanded ? null : item.label)
                         }
-                        className={`w-full justify-between py-5 text-left font-heading text-3xl font-normal whitespace-normal ${
-                          expanded ? "italic text-secondary" : ""
+                        className={`min-h-14 w-full justify-between py-4 text-left font-heading text-xl font-normal leading-6 whitespace-normal ${
+                          expanded ? "text-secondary dark:text-foreground" : ""
                         }`}
                       >
                         {item.label}
                         <ChevronDown
-                          className={`size-5 transition-transform ${
+                          className={`size-4 transition-transform ${
                             expanded ? "rotate-180" : ""
                           }`}
                         />
                       </Button>
                       {expanded && (
-                        <ul className="flex flex-col gap-1 pb-5">
+                        <ul className="flex flex-col pb-3">
                           {item.children.map((child) => {
                             const active = pathname === child.href;
                             return (
                               <li key={child.href}>
                                 <Link
                                   href={child.href}
+                                  onClick={onClose}
                                   aria-current={active ? "page" : undefined}
-                                  className={`relative block py-2 pl-6 text-base ${
+                                  className={`relative flex min-h-11 items-center rounded-md py-2.5 pr-3 pl-6 text-sm leading-5 transition-colors hover:bg-muted ${
                                     active
                                       ? "font-semibold text-foreground"
                                       : "text-muted-foreground hover:text-foreground"
@@ -129,8 +141,9 @@ export function MobileMenu({
                   ) : (
                     <Link
                       href={item.href}
+                      onClick={onClose}
                       aria-current={pathname === item.href ? "page" : undefined}
-                      className="block py-5 font-heading text-3xl"
+                      className="flex min-h-14 items-center py-4 font-heading text-xl leading-6"
                     >
                       {item.label}
                     </Link>
@@ -142,28 +155,28 @@ export function MobileMenu({
         </SiteContainer>
       </nav>
 
-      <SiteContainer>
-        <div className="flex flex-col gap-3 py-4">
-          <ButtonLink
-            href={siteConfig.donateUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            size="lg"
-            className="font-semibold uppercase tracking-wide"
-          >
-            Donate
-          </ButtonLink>
-          <Button
-            variant="ghost"
-            size="lg"
-            onClick={onContact}
-            className="border border-border"
-          >
-            <Mail />
-            Contact us
-          </Button>
-        </div>
-      </SiteContainer>
-    </div>
+      <div className="shrink-0 border-t border-border bg-background pb-[env(safe-area-inset-bottom)]">
+        <SiteContainer>
+          <div className="grid grid-cols-2 gap-3 py-4">
+            <ButtonLink
+              href={siteConfig.donateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="h-11 text-sm font-semibold uppercase tracking-wide"
+            >
+              Donate
+            </ButtonLink>
+            <Button
+              variant="ghost"
+              onClick={onContact}
+              className="h-11 border border-border text-sm"
+            >
+              <Mail />
+              Contact us
+            </Button>
+          </div>
+        </SiteContainer>
+      </div>
+    </dialog>
   );
 }
