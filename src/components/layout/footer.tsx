@@ -61,7 +61,7 @@ export function Footer() {
                     href={href}
                     aria-label={label}
                     size="icon"
-                    className="size-12 rounded-lg bg-secondary-foreground/10 text-primary hover:bg-secondary-foreground/20"
+                    className="size-12 rounded-lg bg-secondary-foreground/10 text-secondary-foreground hover:bg-secondary-foreground/20"
                   >
                     <Icon className="size-6" />
                   </ButtonLink>
