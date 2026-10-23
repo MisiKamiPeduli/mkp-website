@@ -38,6 +38,7 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 src/
   app/                  # routes (App Router)
   components/layout/    # Navbar, Footer, and shared layout pieces
+  components/ui/        # reusable primitives (Button, Polaroid, SectionTag)
   lib/site-config.ts    # site metadata + navigation structure (single source of truth)
 ```
 
