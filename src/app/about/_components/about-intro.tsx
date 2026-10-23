@@ -5,17 +5,9 @@ import { socialLinks } from "@/components/icons/social-icons";
 import { SiteContainer } from "@/components/layout/site-container";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { Polaroid } from "@/components/ui/polaroid";
+import { teamMembers } from "@/lib/team";
 
-// TODO: real number of students on the MKP 2027 team
-const STUDENT_COUNT = "[XX]";
-
-// TODO: placeholder, replace with real team member photos
-const teamPhotos = [
-  "/images/about/team-1.jpg",
-  "/images/about/team-2.jpg",
-  "/images/about/team-3.jpg",
-  "/images/about/team-4.jpg",
-];
+const previewMembers = teamMembers.slice(0, 4);
 
 export function AboutIntro() {
   return (
@@ -56,10 +48,10 @@ export function AboutIntro() {
             >
               <div className="flex items-center gap-3">
                 <div aria-hidden className="flex -space-x-3">
-                  {teamPhotos.map((src) => (
+                  {previewMembers.map((member) => (
                     <Image
-                      key={src}
-                      src={src}
+                      key={member.name}
+                      src={member.image}
                       alt=""
                       width={36}
                       height={36}
@@ -72,7 +64,7 @@ export function AboutIntro() {
                 </div>
                 <p className="text-sm leading-snug">
                   <strong className="text-secondary">
-                    {STUDENT_COUNT} NUS students
+                    {teamMembers.length} NUS students
                   </strong>
                   <br />
                   are behind MKP
