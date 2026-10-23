@@ -11,7 +11,7 @@ export function ExploreProgramsCta() {
         <div className="relative isolate grid items-center gap-10 overflow-hidden rounded-3xl bg-secondary px-6 py-10 text-secondary-foreground sm:px-12 sm:py-14 lg:grid-cols-2">
           <div
             aria-hidden
-            className="pointer-events-none absolute -top-24 -right-24 -z-10 size-96 rounded-full border-[40px] border-primary/25"
+            className="pointer-events-none absolute -top-24 -right-24 -z-10 size-96 rounded-full border-40 border-primary/25"
           />
 
           <div>
