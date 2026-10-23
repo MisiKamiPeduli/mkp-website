@@ -1,15 +1,21 @@
 "use client";
 
+import { ChevronDown, Mail, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { navItems, siteConfig } from "@/lib/site-config";
+import { ContactDialog } from "@/components/contact/contact-dialog";
+import { Button, ButtonLink } from "@/components/ui/button";
+import { Logo } from "./logo";
+import { MobileMenu } from "./mobile-menu";
 import { SiteContainer } from "./site-container";
 
 export function Navbar() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   const [lastPathname, setLastPathname] = useState(pathname);
@@ -26,7 +32,12 @@ export function Navbar() {
       }
     }
     function handleEscape(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpenDropdown(null);
+      if (event.key === "Escape") {
+        navRef.current
+          ?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]')
+          ?.focus();
+        setOpenDropdown(null);
+      }
     }
     document.addEventListener("mousedown", handleClickOutside);
     document.addEventListener("keydown", handleEscape);
@@ -36,120 +47,150 @@ export function Navbar() {
     };
   }, []);
 
-  function isActive(href: string) {
-    return href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const closeMobileMenu = useCallback(() => setMobileOpen(false), []);
+  const closeContact = useCallback(() => setContactOpen(false), []);
+
+  function isCurrentSection(href: string) {
+    return href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
+  }
+
+  // The hidden bold copy (::after) reserves the bold width so the nav doesn't shift.
+  function labelClasses(href: string) {
+    const reserveBoldWidth =
+      "inline-flex flex-col after:invisible after:h-0 after:overflow-hidden after:font-bold after:content-[attr(data-label)]";
+    return `${reserveBoldWidth} ${isCurrentSection(href) ? "font-bold" : ""}`;
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-[var(--background)]/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border bg-background">
       <SiteContainer>
-        <nav ref={navRef} className="flex h-16 items-center justify-between">
-          <Link href="/" className="text-lg font-semibold tracking-tight">
-            {siteConfig.shortName}
-          </Link>
+        <div className="flex h-16 items-center justify-between lg:grid lg:h-20 lg:grid-cols-[1fr_auto_1fr]">
+          <Logo />
 
-          <ul className="hidden items-center gap-1 lg:flex">
-            {navItems.map((item) => (
-              <li key={item.label} className="relative">
-                {item.children ? (
-                  <>
-                    <button
-                      type="button"
-                      aria-haspopup="true"
-                      aria-expanded={openDropdown === item.label}
-                      onClick={() =>
-                        setOpenDropdown((current) =>
-                          current === item.label ? null : item.label
-                        )
-                      }
-                      className={`flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-black/5 ${
-                        isActive(item.href) ? "text-blue-700" : ""
-                      }`}
-                    >
-                      {item.label}
-                      <span aria-hidden className="text-xs">
-                        {openDropdown === item.label ? "▲" : "▼"}
-                      </span>
-                    </button>
-                    {openDropdown === item.label && (
-                      <ul className="absolute left-0 top-full mt-1 min-w-48 rounded-md border border-black/10 bg-[var(--background)] py-1 shadow-lg">
-                        {item.children.map((child) => (
-                          <li key={child.href}>
-                            <Link
-                              href={child.href}
-                              className={`block px-4 py-2 text-sm hover:bg-black/5 ${
-                                pathname === child.href
-                                  ? "text-blue-700"
-                                  : ""
-                              }`}
-                            >
-                              {child.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    href={item.href}
-                    className={`block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-black/5 ${
-                      isActive(item.href) ? "text-blue-700" : ""
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-
-          <button
-            type="button"
-            aria-label="Toggle menu"
-            aria-expanded={mobileOpen}
-            onClick={() => setMobileOpen((open) => !open)}
-            className="flex h-10 w-10 items-center justify-center rounded-md hover:bg-black/5 lg:hidden"
-          >
-            <span aria-hidden>{mobileOpen ? "✕" : "☰"}</span>
-          </button>
-        </nav>
-
-        {mobileOpen && (
-          <div className="border-t border-black/10 pb-4 lg:hidden">
-            <ul className="flex flex-col gap-1 pt-2">
+          <nav ref={navRef} aria-label="Main" className="hidden lg:block">
+            <ul className="flex items-center gap-10">
               {navItems.map((item) => (
-                <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className={`block rounded-md px-3 py-2 text-sm font-medium hover:bg-black/5 ${
-                      isActive(item.href) ? "text-blue-700" : ""
-                    }`}
-                  >
-                    {item.label}
-                  </Link>
-                  {item.children && (
-                    <ul className="ml-4 flex flex-col gap-1 border-l border-black/10 pl-3">
-                      {item.children.map((child) => (
-                        <li key={child.href}>
-                          <Link
-                            href={child.href}
-                            className={`block rounded-md px-3 py-2 text-sm hover:bg-black/5 ${
-                              pathname === child.href ? "text-blue-700" : ""
-                            }`}
-                          >
-                            {child.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                <li key={item.label} className="relative">
+                  {item.children ? (
+                    <>
+                      <Button
+                        variant="link"
+                        aria-haspopup="true"
+                        aria-expanded={openDropdown === item.label}
+                        onClick={() =>
+                          setOpenDropdown((current) =>
+                            current === item.label ? null : item.label,
+                          )
+                        }
+                        className="gap-1.5 py-2 text-[15px]"
+                      >
+                        <span data-label={item.label} className={labelClasses(item.href)}>
+                          {item.label}
+                        </span>
+                        <ChevronDown
+                          className={`size-4 transition-transform ${
+                            openDropdown === item.label ? "rotate-180" : ""
+                          }`}
+                        />
+                      </Button>
+                      {openDropdown === item.label && (
+                        <ul className="absolute left-1/2 top-full mt-2 min-w-52 -translate-x-1/2 rounded-lg border border-border bg-popover py-2 text-popover-foreground shadow-lg">
+                          {item.children.map((child) => {
+                            const active = pathname === child.href;
+                            return (
+                              <li key={child.href}>
+                                <Link
+                                  href={child.href}
+                                  onClick={() => {
+                                    navRef.current
+                                      ?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]')
+                                      ?.focus();
+                                    setOpenDropdown(null);
+                                  }}
+                                  aria-current={active ? "page" : undefined}
+                                  className={`relative block py-2 pl-6 pr-4 text-sm transition-colors hover:bg-muted ${
+                                    active ? "font-medium" : ""
+                                  }`}
+                                >
+                                  {active && (
+                                    <span
+                                      aria-hidden
+                                      className="absolute left-2.5 top-1/2 size-1.5 -translate-y-1/2 rounded-full bg-primary"
+                                    />
+                                  )}
+                                  {child.label}
+                                </Link>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      )}
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={() => setOpenDropdown(null)}
+                      aria-current={pathname === item.href ? "page" : undefined}
+                      className="block py-2 text-[15px] font-medium"
+                    >
+                      <span data-label={item.label} className={labelClasses(item.href)}>
+                        {item.label}
+                      </span>
+                    </Link>
                   )}
                 </li>
               ))}
             </ul>
+          </nav>
+
+          <div className="hidden items-center gap-4 justify-self-end lg:flex">
+            <Button
+              variant="ghost"
+              size="icon"
+              aria-label="Contact us"
+              onClick={() => setContactOpen(true)}
+            >
+              <Mail className="size-5" />
+            </Button>
+            <ButtonLink
+              href={siteConfig.donateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold uppercase tracking-wide"
+            >
+              Donate
+            </ButtonLink>
           </div>
-        )}
+
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Open menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+            onClick={() => setMobileOpen(true)}
+            className="-mr-2 lg:hidden"
+          >
+            <Menu className="size-6" />
+          </Button>
+        </div>
       </SiteContainer>
+
+      {mobileOpen && (
+        <MobileMenu
+          id="mobile-menu"
+          pathname={pathname}
+          onClose={closeMobileMenu}
+          onContact={() => {
+            setMobileOpen(false);
+            setContactOpen(true);
+          }}
+        />
+      )}
+
+      <ContactDialog open={contactOpen} onClose={closeContact} />
     </header>
   );
 }
