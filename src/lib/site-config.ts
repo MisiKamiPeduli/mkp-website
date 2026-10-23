@@ -5,6 +5,7 @@ export const siteConfig = {
     "Misi Kami Peduli (MKP), or Mission: We Care, is a social initiative by Indonesian students at the National University of Singapore. We are motivated by an awareness of the socio-economic challenges in Indonesia and a desire to give back to our home country.",
   // TODO: real donation URL
   donateUrl: "https://kitabisa.com/campaign/misikamipeduli2024",
+  instagramUrl: "https://www.instagram.com/misikamipeduli/",
 };
 
 export type NavLink = {
