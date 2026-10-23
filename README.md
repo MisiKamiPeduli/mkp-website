@@ -54,6 +54,7 @@ Figma designs.
 
 - Headings (`h1`–`h6`): Libre Baskerville.
 - Body text, navigation, and controls: Inter.
+- Handwritten accents (e.g. the "MKP" in "About MKP"): Dancing Script, via `font-script`.
 
 Fonts are loaded through `next/font/google` in `src/app/layout.tsx` and
 self-hosted by Next.js. Global defaults are defined in `src/app/globals.css`.
