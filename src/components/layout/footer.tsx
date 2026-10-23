@@ -1,19 +1,9 @@
 import Link from "next/link";
 import { navItems, siteConfig } from "@/lib/site-config";
-import {
-  InstagramIcon,
-  LinkedinIcon,
-  TelegramIcon,
-} from "@/components/icons/social-icons";
+import { socialLinks } from "@/components/icons/social-icons";
 import { ButtonLink } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { SiteContainer } from "./site-container";
-
-const socials = [
-  { label: "LinkedIn", href: siteConfig.linkedinUrl, Icon: LinkedinIcon },
-  { label: "Telegram", href: siteConfig.telegramUrl, Icon: TelegramIcon },
-  { label: "Instagram", href: siteConfig.instagramUrl, Icon: InstagramIcon },
-];
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -65,7 +55,7 @@ export function Footer() {
             </p>
 
             <ul className="flex gap-4">
-              {socials.map(({ label, href, Icon }) => (
+              {socialLinks.map(({ label, href, Icon }) => (
                 <li key={label}>
                   <ButtonLink
                     href={href}

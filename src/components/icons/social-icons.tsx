@@ -1,4 +1,5 @@
 import { SVGProps } from "react";
+import { siteConfig } from "@/lib/site-config";
 
 type IconProps = SVGProps<SVGSVGElement>;
 
@@ -58,3 +59,9 @@ export function InstagramIcon(props: IconProps) {
     </svg>
   );
 }
+
+export const socialLinks = [
+  { label: "LinkedIn", href: siteConfig.linkedinUrl, Icon: LinkedinIcon },
+  { label: "Telegram", href: siteConfig.telegramUrl, Icon: TelegramIcon },
+  { label: "Instagram", href: siteConfig.instagramUrl, Icon: InstagramIcon },
+];
