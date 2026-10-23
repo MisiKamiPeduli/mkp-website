@@ -11,6 +11,7 @@ export type Program = {
 
 // TODO: temporary data, newest first. Coordinates are from OpenStreetMap
 // unless marked approximate.
+// Program history source: https://directorsmkp.wixsite.com/misikamipeduli/our-footprints
 export const pastPrograms: Program[] = [
   {
     year: 2024,
@@ -31,6 +32,9 @@ export const pastPrograms: Program[] = [
     location: { name: "Sumba, East Nusa Tenggara", lat: -9.75, lng: 120.1 },
   },
   {
+    // Preserved from Wix: its heading says 2017 / Desa Homba Karipit,
+    // while its paragraph says 2018 / Kampung Tanakandumbuka.
+    // Keep the source wording until MKP confirms the historical details.
     year: 2017,
     title: "Desa Homba Karipit",
     description: "In 2018, Misi Kami Peduli (Mission: We Care) visited Kampung Tanakandumbuka and built a toilet and communal hall. The technical team constructed a solar panel and wiring for 23 houses, including toilet and communal hall. The education and health team collaborated to install workshops regarding money-saving, healthcare, and science fair. We also visited a local primary school, SDN Hombakaripit and conducted a small Kidzania where the children could try a lot of different occupation and allow them to dream big.",

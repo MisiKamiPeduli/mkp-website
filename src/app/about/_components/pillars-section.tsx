@@ -1,4 +1,4 @@
-import { BookOpen, Cpu, Leaf, LucideIcon, Users } from "lucide-react";
+import { BookOpen, Cpu, type LucideIcon } from "lucide-react";
 import { SiteContainer } from "@/components/layout/site-container";
 
 type Pillar = {

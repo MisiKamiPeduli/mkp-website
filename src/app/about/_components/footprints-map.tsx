@@ -192,13 +192,13 @@ export function FootprintsMap() {
 
         <div
           aria-live="polite"
-          className="mt-6 rounded-xl bg-white p-4 text-left shadow-md sm:flex sm:gap-8 sm:p-6"
+          className="mt-6 rounded-xl bg-card p-4 text-left text-card-foreground shadow-md sm:flex sm:gap-8 sm:p-6"
         >
           <div className="sm:w-64 sm:shrink-0">
             <p className="text-[11px] font-bold uppercase tracking-widest text-primary">
               MKP {selected.year}
             </p>
-            <h3 className="mt-1 text-lg font-bold text-secondary">
+            <h3 className="mt-1 text-lg font-bold text-secondary dark:text-card-foreground">
               {selected.title}
             </h3>
             <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
@@ -210,7 +210,7 @@ export function FootprintsMap() {
             <p className="text-sm leading-relaxed">{selected.description}</p>
             <Link
               href="/programs/past"
-              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline"
+              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline dark:text-card-foreground"
             >
               View past programs
               <ArrowRight aria-hidden className="size-3.5" />
