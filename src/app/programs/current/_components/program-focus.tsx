@@ -1,6 +1,5 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -20,8 +19,8 @@ const focusAreas = [
     image: "/images/landing/way-kambas-garden.jpg",
     alt: "Vegetable beds visited while exploring agricultural initiatives in Way Kambas",
     initiatives: [
-      { title: "Greenhouse development", description: "Practical engineering solutions to support local agriculture." },
-      { title: "MKP website", description: "A shared home for our programmes, stories, and future partnerships." },
+      { title: "Greenhouse development", description: "Engineering solutions to modernise local agricultural practices." },
+      { title: "MKP website", description: "Helping future sponsors and partners discover MKP and get involved." },
     ],
   },
 ];
@@ -30,29 +29,23 @@ export function ProgramFocus() {
   const [activeIndex, setActiveIndex] = useState(0);
   const active = focusAreas[activeIndex];
 
-  function changeFocus(direction: number) {
-    setActiveIndex((current) => (current + direction + focusAreas.length) % focusAreas.length);
-  }
-
   return (
     <section aria-labelledby="focus-heading" className="py-12 sm:py-16">
-      <div className="flex items-end justify-between gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-wide text-primary">Planned programmes</p>
           <h2 id="focus-heading" className="mt-3 text-2xl font-bold leading-snug sm:text-3xl">What we’re planning</h2>
         </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <span className="mr-1 text-xs tabular-nums text-muted-foreground" aria-hidden="true">{activeIndex + 1} / {focusAreas.length}</span>
-          <Button variant="ghost" size="icon" onClick={() => changeFocus(-1)} aria-label="Previous programme focus" aria-controls="programme-focus" className="size-9 rounded-md border border-border">
-            <ChevronLeft className="size-4" />
-          </Button>
-          <Button variant="ghost" size="icon" onClick={() => changeFocus(1)} aria-label="Next programme focus" aria-controls="programme-focus" className="size-9 rounded-md border border-border">
-            <ChevronRight className="size-4" />
-          </Button>
+        <div role="group" aria-label="Choose a programme pillar" className="flex items-center gap-5">
+          {focusAreas.map((area, index) => (
+            <Button key={area.title} variant="link" onClick={() => setActiveIndex(index)} aria-pressed={activeIndex === index} aria-controls="programme-focus" className={`rounded-none border-b-2 pb-2 text-xs font-semibold sm:text-sm ${activeIndex === index ? "border-primary text-secondary dark:text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"}`}>
+              {area.title}
+            </Button>
+          ))}
         </div>
       </div>
 
-      <div role="group" aria-roledescription="carousel" aria-label="Education and Technology programmes" className="mt-6">
+      <div role="group" aria-label="Education and Technology programmes" className="mt-6">
         <div className="relative aspect-[16/10] bg-muted md:w-3/5">
           <Image src={active.image} alt={active.alt} fill sizes="(min-width: 1152px) 615px, (min-width: 768px) 60vw, 100vw" className="object-cover" />
         </div>
