@@ -28,7 +28,7 @@ export function ExploreProgramsCta() {
               past villages and what&apos;s planned for MKP 2027 in Way Kambas.
             </p>
             <ButtonLink
-              href="/programs"
+              href="/programs/current"
               className="mt-8 rounded-md font-semibold uppercase tracking-wide"
             >
               View programs

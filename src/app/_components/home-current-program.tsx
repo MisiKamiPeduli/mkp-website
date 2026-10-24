@@ -45,7 +45,7 @@ export function HomeCurrentProgram() {
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               <ButtonLink href={siteConfig.donateUrl} target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" className="gap-2 px-4 text-[11px] font-semibold uppercase"><HandHeart aria-hidden className="size-3.5" /> Donate now</ButtonLink>
-              <ButtonLink href="/programs" size="sm" className="gap-2 px-4 text-[11px] font-semibold uppercase">Learn more <ArrowRight aria-hidden className="size-3.5" /></ButtonLink>
+              <ButtonLink href="/programs/current" size="sm" className="gap-2 px-4 text-[11px] font-semibold uppercase">Learn more <ArrowRight aria-hidden className="size-3.5" /></ButtonLink>
             </div>
           </div>
           <Snapshot src="/images/landing/way-kambas-classroom.jpg" alt="A classroom discussion during the MKP 2027 community visit" className="relative mx-auto mt-8 w-24 rotate-8 sm:absolute sm:bottom-3 sm:right-0 sm:mt-0 sm:w-[14%]" />
