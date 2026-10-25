@@ -16,7 +16,7 @@ export function HomeSupport() {
                 Partner With Us <ArrowUpRight aria-hidden className="size-3.5" />
                 <span className="sr-only">on Instagram (opens in a new tab)</span>
               </ButtonLink>
-              <ButtonLink href="/programs" variant="link" size="sm" className="gap-2 text-[11px] font-semibold uppercase text-secondary-foreground">
+              <ButtonLink href="/programs/current" variant="link" size="sm" className="gap-2 text-[11px] font-semibold uppercase text-secondary-foreground">
                 Explore MKP 2027 <ArrowRight aria-hidden className="size-3.5" />
               </ButtonLink>
             </div>

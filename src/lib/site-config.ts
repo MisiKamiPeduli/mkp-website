@@ -36,7 +36,7 @@ export const navItems: NavItem[] = [
     label: "What We Do",
     href: "/programs",
     children: [
-      { label: "Current Programs", href: "/programs" },
+      { label: "Current Programs", href: "/programs/current" },
       { label: "Past Programs", href: "/programs/past" },
     ],
   },
