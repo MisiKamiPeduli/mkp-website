@@ -14,6 +14,7 @@
   --primary-foreground: #ffffff;
   --secondary: #1e3070;
   --secondary-foreground: #ffffff;
+  --secondary-text: #1e3070;
   --accent: #eab520;
   --accent-foreground: #171717;
 
@@ -33,6 +34,8 @@
     --card-foreground: #ededed;
     --popover: #171717;
     --popover-foreground: #ededed;
+
+    --secondary-text: var(--foreground);
 
     --muted: #262626;
     --muted-foreground: #a3a3a3;
@@ -54,6 +57,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-text: var(--secondary-text);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-muted: var(--muted);

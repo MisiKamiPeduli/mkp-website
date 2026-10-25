@@ -98,7 +98,7 @@ export function MobileMenu({
                           setOpenSection(expanded ? null : item.label)
                         }
                         className={`min-h-14 w-full justify-between py-4 text-left font-heading text-xl font-normal leading-6 whitespace-normal ${
-                          expanded ? "text-secondary dark:text-foreground" : ""
+                          expanded ? "text-secondary-text" : ""
                         }`}
                       >
                         {item.label}
@@ -160,8 +160,6 @@ export function MobileMenu({
           <div className="grid grid-cols-2 gap-3 py-4">
             <ButtonLink
               href={siteConfig.donateUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               className="h-11 text-sm font-semibold uppercase tracking-wide"
             >
               Donate

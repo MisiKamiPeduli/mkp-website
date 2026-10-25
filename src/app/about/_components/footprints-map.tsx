@@ -123,13 +123,13 @@ export function FootprintsMap() {
                   viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
                   className="absolute inset-0 size-full"
                 >
-                  <g className="fill-secondary/15">
+                  <g className="fill-secondary-text/15">
                     {contextPaths.map((d, index) => (
                       <path key={index} d={d} />
                     ))}
                   </g>
                   {/* The stroke thickens small islands (and Singapore) enough to see. */}
-                  <g className="fill-secondary stroke-secondary opacity-80">
+                  <g className="fill-secondary-text stroke-secondary-text opacity-80">
                     {landPaths.map((d, index) => (
                       <path
                         key={index}
@@ -198,7 +198,7 @@ export function FootprintsMap() {
             <p className="text-[11px] font-bold uppercase tracking-widest text-primary">
               MKP {selected.year}
             </p>
-            <h3 className="mt-1 text-lg font-bold text-secondary dark:text-card-foreground">
+            <h3 className="mt-1 text-lg font-bold text-secondary-text">
               {selected.title}
             </h3>
             <p className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
@@ -210,7 +210,7 @@ export function FootprintsMap() {
             <p className="text-sm leading-relaxed">{selected.description}</p>
             <Link
               href="/programs/past"
-              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-secondary hover:underline dark:text-card-foreground"
+              className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-secondary-text hover:underline"
             >
               View past programs
               <ArrowRight aria-hidden className="size-3.5" />
@@ -233,7 +233,7 @@ export function FootprintsMap() {
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                   isSelected
                     ? "border-secondary bg-secondary text-secondary-foreground"
-                    : "border-border bg-background hover:border-secondary/40",
+                    : "border-border bg-background hover:border-secondary-text/40",
                 )}
               >
                 <span className="font-bold">{program.year}</span>{" "}

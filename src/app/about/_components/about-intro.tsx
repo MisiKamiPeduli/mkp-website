@@ -63,7 +63,7 @@ export function AboutIntro() {
                   </span>
                 </div>
                 <p className="text-sm leading-snug">
-                  <strong className="text-secondary">
+                  <strong className="text-secondary-text">
                     {teamMembers.length} NUS students
                   </strong>
                   <br />
@@ -90,11 +90,9 @@ export function AboutIntro() {
                     <ButtonLink
                       href={href}
                       aria-label={label}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       variant="ghost"
                       size="icon"
-                      className="size-9 border border-border text-secondary"
+                      className="size-9 border border-border text-secondary-text"
                     >
                       <Icon className="size-4" />
                     </ButtonLink>
