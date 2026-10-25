@@ -71,6 +71,20 @@ and `font-sans` for normal text.
 
 ## Images
 
+### Team photographs
+
+The Our Team page uses the 2024, 2021, 2020, and 2019 teams from
+[MKP’s original team archive](https://directorsmkp.wixsite.com/misikamipeduli/meet-the-team).
+Names, roles, and cohorts are stored in `src/lib/team.ts`; downloaded portraits
+are in `public/images/team/`. These historical profiles are not the 2027 roster.
+All 80 profile appearances are included, including the members hidden inside
+Wix's department carousels (2024: 21; 2021: 10; 2020: 24; 2019: 25).
+The directory switches between years and groups each complete roster by team.
+To add a new team, add a cohort at the start of `teamCohorts` and its photographs
+to the same image folder. The About page avatar preview follows the first cohort.
+
+### Image optimisation
+
 Put images in `public/images/` (e.g. `public/images/about/hero.jpg`), then run:
 
 ```bash

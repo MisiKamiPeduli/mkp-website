@@ -64,10 +64,10 @@ export function AboutIntro() {
                 </div>
                 <p className="text-sm leading-snug">
                   <strong className="text-secondary-text">
-                    {teamMembers.length} NUS students
+                    Meet our volunteers
                   </strong>
                   <br />
-                  are behind MKP
+                  Explore the team archive
                 </p>
               </div>
               {/* Styled as a button, but the whole card is the link. */}
