@@ -57,7 +57,10 @@ export function TeamArchive({ teams }: { teams: PastTeam[] }) {
         <div className="mx-auto max-w-5xl">
           {teams.map((team) => (
             <div key={team.year} id={`team-${team.year}`} role="tabpanel" aria-labelledby={`team-tab-${team.year}`} hidden={selected !== team.year} tabIndex={0} className="py-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
-              <h3 className="mb-8 text-3xl italic text-secondary-text sm:text-4xl">{team.year} team</h3>
+              <header className="mb-8 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                <h3 className="text-3xl italic text-secondary-text sm:text-4xl">{team.year} team</h3>
+                <p className="text-sm text-muted-foreground">{team.members.length} members</p>
+              </header>
               <div className="space-y-10">
                 {divisionsOf(team).map(({ division, members }) => (
                   <section key={division} aria-labelledby={`division-${team.year}-${slugify(division)}`}>
@@ -66,7 +69,7 @@ export function TeamArchive({ teams }: { teams: PastTeam[] }) {
                       {members.map((member) => {
                         const lead = division === DIRECTORS;
                         return (
-                          <li key={member.name} className="flex items-center gap-4 rounded-lg p-2 -m-2 transition-colors hover:bg-muted">
+                          <li key={member.name} className="flex items-center gap-4">
                             <div className={`relative shrink-0 overflow-hidden rounded-full bg-muted ${lead ? "size-24" : "size-16"}`}>
                               {member.image ? (
                                 <Image src={member.image} alt={`Portrait of ${member.name}`} fill sizes={lead ? "96px" : "64px"} className="object-cover" />
