@@ -1,83 +1,51 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import { SiteContainer } from "@/components/layout/site-container";
 import type { SponsorYear } from "@/lib/sponsors";
 
+function Group({ label, names, note }: { label: string; names: string[]; note?: string }) {
+  return (
+    <section>
+      <h4 className="font-sans text-base font-bold italic text-secondary-text">{label}</h4>
+      <ul className="mt-2 space-y-1">
+        {names.map((name) => <li key={name} className="text-sm font-medium uppercase leading-6 tracking-wide text-secondary-text sm:text-base">{name}</li>)}
+      </ul>
+      {note && <p className="mt-2 text-xs normal-case leading-5 text-muted-foreground">{note}</p>}
+    </section>
+  );
+}
+
 export function SponsorArchive({ years }: { years: SponsorYear[] }) {
-  const [selected, setSelected] = useState(years[0].year);
-  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
-  const archive = useRef<HTMLElement | null>(null);
-
-  function selectYear(index: number) {
-    setSelected(years[index].year);
-    archive.current?.scrollIntoView({ block: "start" });
-  }
-
-  function navigateYears(event: KeyboardEvent<HTMLButtonElement>, index: number) {
-    let next = index;
-    if (event.key === "ArrowRight") next = (index + 1) % years.length;
-    else if (event.key === "ArrowLeft") next = (index - 1 + years.length) % years.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = years.length - 1;
-    else return;
-    event.preventDefault();
-    selectYear(next);
-    tabs.current[next]?.focus();
-  }
+  const [index, setIndex] = useState(0);
+  const go = (next: number) => setIndex((next + years.length) % years.length);
 
   return (
-    <section ref={archive} id="sponsor-archive" aria-label="Partners and sponsors by year" className="scroll-mt-16 lg:scroll-mt-20">
-      <div className="sticky top-16 z-20 border-y border-border bg-background lg:top-20">
-        <SiteContainer>
-          <div className="mx-auto flex max-w-5xl items-center justify-between gap-6">
-            <p className="hidden text-xs font-medium text-muted-foreground md:block">Explore past partnerships</p>
-            <div role="tablist" aria-label="Sponsorship year" className="flex min-w-0 flex-1 md:flex-none">
-              {years.map((year, index) => (
-                <button key={year.year} ref={(element) => { tabs.current[index] = element; }} id={`sponsor-tab-${year.year}`} type="button" role="tab" aria-selected={selected === year.year} aria-controls={`sponsors-${year.year}`} tabIndex={selected === year.year ? 0 : -1} onClick={() => selectYear(index)} onKeyDown={(event) => navigateYears(event, index)} className={`min-h-14 min-w-0 flex-1 border-b-2 px-2 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-ring sm:px-5 sm:text-sm ${selected === year.year ? "border-primary text-secondary-text" : "border-transparent text-muted-foreground hover:text-secondary-text"}`}>{year.year}</button>
-              ))}
-            </div>
-          </div>
-        </SiteContainer>
-      </div>
-
+    <section id="sponsor-archive" aria-roledescription="carousel" aria-label="Partners and sponsors by year" className="border-y border-border bg-muted">
       <SiteContainer>
-        <div className="mx-auto max-w-5xl">
-          {years.map((year) => (
-            <div key={year.year} id={`sponsors-${year.year}`} role="tabpanel" aria-labelledby={`sponsor-tab-${year.year}`} hidden={selected !== year.year} tabIndex={0} className="py-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:py-12">
-              <header className="mb-8 flex flex-wrap items-baseline gap-x-5 gap-y-2">
-                <h3 className="text-4xl italic leading-tight text-secondary-text sm:text-5xl">{year.year}</h3>
-                <p className="text-sm text-muted-foreground">Partners & sponsors</p>
-              </header>
+        <div className="mx-auto flex max-w-3xl items-start gap-2 py-12 sm:gap-6 sm:py-16">
+          <button type="button" onClick={() => go(index - 1)} aria-label={`Previous year, ${years[(index - 1 + years.length) % years.length].year}`} className="mt-40 shrink-0 rounded-full p-2 text-secondary-text transition-colors hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"><ChevronLeft aria-hidden className="size-6" /></button>
 
-              <section aria-labelledby={`ngo-heading-${year.year}`} className="grid gap-4 rounded-xl bg-muted px-5 py-6 sm:px-7 md:grid-cols-[150px_1fr] md:gap-8">
-                <h4 id={`ngo-heading-${year.year}`} className="font-sans text-[11px] font-semibold uppercase tracking-wide text-secondary-text">Partner NGOs</h4>
-                <div>
-                  <ul className="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-                    {year.partners.map((partner) => <li key={partner} className="font-heading text-base leading-relaxed text-secondary-text sm:text-lg">{partner}</li>)}
-                  </ul>
-                  {year.partnerNote && <p className="mt-2 text-xs leading-5 text-muted-foreground">{year.partnerNote}</p>}
+          <div className="min-w-0 flex-1 text-center" aria-live="polite">
+            {years.map((year, i) => (
+              <div key={year.year} role="group" aria-roledescription="slide" aria-label={`${year.year}, ${i + 1} of ${years.length}`} hidden={i !== index}>
+                <h3 className="text-5xl font-bold tracking-[0.2em] text-secondary-text sm:text-6xl">{year.year}</h3>
+                <div className="mt-10 space-y-8">
+                  <Group label="Partner NGO" names={year.partners} note={year.partnerNote} />
+                  {year.tiers.map((tier) => <Group key={tier.name} label={`${tier.name} Sponsorship`} names={tier.sponsors} />)}
+                  <Group label="Endorsed By" names={year.endorsements} />
                 </div>
-              </section>
-
-              <div className="grid gap-x-10 gap-y-9 py-9 sm:grid-cols-2 sm:py-10 lg:grid-cols-3">
-                {year.tiers.map((tier) => (
-                  <section key={tier.name} aria-labelledby={`tier-${year.year}-${tier.name.toLowerCase()}`}>
-                    <h4 id={`tier-${year.year}-${tier.name.toLowerCase()}`} className="flex items-center gap-2 font-sans text-[11px] font-semibold uppercase tracking-wide text-secondary-text"><span aria-hidden className="h-3 w-0.5 bg-primary" />{tier.name} sponsors</h4>
-                    <ul className="mt-4 space-y-3">
-                      {tier.sponsors.map((sponsor) => <li key={sponsor} className="text-sm font-medium leading-6 text-foreground/85">{sponsor}</li>)}
-                    </ul>
-                  </section>
-                ))}
               </div>
+            ))}
+          </div>
 
-              <section aria-labelledby={`endorsements-${year.year}`} className="grid gap-4 border-t border-border pt-6 md:grid-cols-[150px_1fr] md:gap-8">
-                <h4 id={`endorsements-${year.year}`} className="font-sans text-[11px] font-semibold uppercase tracking-wide text-muted-foreground">Endorsed by</h4>
-                <ul className="grid gap-x-10 gap-y-3 sm:grid-cols-2">
-                  {year.endorsements.map((endorsement) => <li key={endorsement} className="text-xs leading-6 text-foreground/75">{endorsement}</li>)}
-                </ul>
-              </section>
-            </div>
+          <button type="button" onClick={() => go(index + 1)} aria-label={`Next year, ${years[(index + 1) % years.length].year}`} className="mt-40 shrink-0 rounded-full p-2 text-secondary-text transition-colors hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"><ChevronRight aria-hidden className="size-6" /></button>
+        </div>
+
+        <div className="flex justify-center gap-2 pb-10">
+          {years.map((year, i) => (
+            <button key={year.year} type="button" onClick={() => setIndex(i)} aria-label={`Show ${year.year}`} aria-current={i === index} className={`size-2.5 rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${i === index ? "bg-primary" : "bg-border hover:bg-muted-foreground"}`} />
           ))}
         </div>
       </SiteContainer>
