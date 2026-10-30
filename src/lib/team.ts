@@ -518,7 +518,7 @@ export const pastTeams: PastTeam[] = [
         "role": "Member",
         "division": "Education",
         "study": "Mechanical Engineering ’27",
-        "image": "/images/team/2024/felix-gilang-claychia.jpg"
+        "image": "/images/team/2024/felix-gilang-claychia-portrait.jpg"
       },
       {
         "name": "John Howard Wijaya",
