@@ -20,9 +20,8 @@ export default function PastSponsorsPage() {
       />
 
       <SiteContainer>
-        <section aria-labelledby="sponsors-intro-heading" className="py-10 sm:py-14">
-          <h2 id="sponsors-intro-heading" className="text-2xl leading-snug text-secondary-text sm:text-3xl">Partners <span className="italic">and Sponsors</span></h2>
-          <p className="mt-4 max-w-3xl text-sm leading-7 text-foreground/75">Misi Kami Peduli (Mission: We Care) is very grateful to receive trust and support from various partners without whom we would not be where we are today. Our past sponsors include Maybank, NAMZ, Tanoto Foundation, Bank of Indonesia, Martha Tilaar Group and Gramedia. The support from Embassy of the Republic of Indonesia in Singapore and corporate partners has enabled MKP to grow as a sustainable initiative every year and bring about meaningful contribution to the villages we visit.</p>
+        <section aria-label="About our partners and sponsors" className="py-10 sm:py-14">
+          <p className="max-w-3xl text-sm leading-7 text-foreground/75 sm:text-base sm:leading-8">Misi Kami Peduli (Mission: We Care) is very grateful to receive trust and support from various partners without whom we would not be where we are today. Our past sponsors include Maybank, NAMZ, Tanoto Foundation, Bank of Indonesia, Martha Tilaar Group and Gramedia. The support from Embassy of the Republic of Indonesia in Singapore and corporate partners has enabled MKP to grow as a sustainable initiative every year and bring about meaningful contribution to the villages we visit.</p>
         </section>
       </SiteContainer>
 
