@@ -13,7 +13,7 @@ export function Footer() {
       <SiteContainer>
         <div className="flex flex-col gap-10 py-12 md:flex-row md:justify-between">
           <div className="max-w-sm">
-            <Logo className="bg-transparent text-secondary-foreground" />
+            <Logo variant="white" />
             <p className="mt-6 text-sm leading-relaxed text-secondary-foreground/80">
               <strong className="font-semibold text-secondary-foreground">
                 {siteConfig.name} ({siteConfig.shortName}) or Mission: We Care

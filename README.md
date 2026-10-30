@@ -30,8 +30,10 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 | `/about` | About Us |
 | `/about/past-sponsors` | Past Sponsors |
 | `/about/our-team` | Our Team |
-| `/programs` | Current Programs |
+| `/programs/current` | Current Programs |
 | `/programs/past` | Past Programs |
+
+`/programs` redirects to `/programs/current` for existing links.
 
 ## Project structure
 

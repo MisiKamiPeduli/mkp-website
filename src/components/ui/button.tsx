@@ -58,13 +58,26 @@ export function Button({
 
 type ButtonLinkProps = ComponentProps<typeof Link> & ButtonStyleProps;
 
+// External links open in a new tab; internal ones stay in the same tab.
+function isExternal(href: ButtonLinkProps["href"]) {
+  return typeof href === "string" && /^https?:\/\//.test(href);
+}
+
 export function ButtonLink({
   variant,
   size,
   className,
   ...props
 }: ButtonLinkProps) {
+  const externalProps = isExternal(props.href)
+    ? { target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
   return (
-    <Link className={buttonClasses({ variant, size, className })} {...props} />
+    <Link
+      className={buttonClasses({ variant, size, className })}
+      {...externalProps}
+      {...props}
+    />
   );
 }

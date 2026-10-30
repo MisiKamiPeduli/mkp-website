@@ -156,8 +156,6 @@ export function Navbar() {
             </Button>
             <ButtonLink
               href={siteConfig.donateUrl}
-              target="_blank"
-              rel="noopener noreferrer"
               className="font-semibold uppercase tracking-wide"
             >
               Donate

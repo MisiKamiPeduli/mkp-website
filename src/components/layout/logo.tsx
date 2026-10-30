@@ -4,10 +4,35 @@ import type { MouseEventHandler } from "react";
 import { twMerge } from "tailwind-merge";
 import { siteConfig } from "@/lib/site-config";
 
+type LogoVariant = "auto" | "black" | "white";
+
+function LogoImage({
+  variant,
+  className,
+}: {
+  variant: Exclude<LogoVariant, "auto">;
+  className?: string;
+}) {
+  return (
+    <Image
+      src={`/images/brand/logo-${variant}.svg`}
+      alt=""
+      width={178}
+      height={64}
+      className={twMerge("h-auto w-28 sm:w-32", className)}
+      loading="eager"
+      unoptimized
+    />
+  );
+}
+
 export function Logo({
+  variant = "auto",
   className,
   onClick,
 }: {
+  // "auto" follows the colour scheme; force "white" on dark surfaces like the footer.
+  variant?: LogoVariant;
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) {
@@ -17,19 +42,18 @@ export function Logo({
       aria-label={siteConfig.name}
       onClick={onClick}
       className={twMerge(
-        "inline-flex shrink-0 items-center justify-self-start rounded-sm bg-white p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+        "inline-flex shrink-0 items-center justify-self-start rounded-sm p-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         className,
       )}
     >
-      <Image
-        src="/images/brand/mkp-logo.avif"
-        alt=""
-        width={150}
-        height={54}
-        className="h-auto w-28 sm:w-32"
-        loading="eager"
-        unoptimized
-      />
+      {variant === "auto" ? (
+        <>
+          <LogoImage variant="black" className="dark:hidden" />
+          <LogoImage variant="white" className="hidden dark:block" />
+        </>
+      ) : (
+        <LogoImage variant={variant} />
+      )}
     </Link>
   );
 }
