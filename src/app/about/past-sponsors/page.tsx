@@ -20,16 +20,16 @@ export default function PastSponsorsPage() {
       />
 
       <SiteContainer>
-        <section aria-labelledby="sponsors-intro-heading" className="mx-auto max-w-3xl py-10 text-center sm:py-14">
-          <h2 id="sponsors-intro-heading" className="text-2xl font-bold uppercase tracking-wide text-primary sm:text-3xl">Partners and Sponsors</h2>
-          <p className="mt-5 text-sm leading-7 text-foreground/80">Misi Kami Peduli (Mission: We Care) is very grateful to receive trust and support from various partners without whom we would not be where we are today. Our past sponsors include Maybank, NAMZ, Tanoto Foundation, Bank of Indonesia, Martha Tilaar Group and Gramedia. The support from Embassy of the Republic of Indonesia in Singapore and corporate partners has enabled MKP to grow as a sustainable initiative every year and bring about meaningful contribution to the villages we visit.</p>
+        <section aria-labelledby="sponsors-intro-heading" className="py-10 sm:py-14">
+          <h2 id="sponsors-intro-heading" className="text-2xl leading-snug text-secondary-text sm:text-3xl">Partners <span className="italic">and Sponsors</span></h2>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-foreground/75">Misi Kami Peduli (Mission: We Care) is very grateful to receive trust and support from various partners without whom we would not be where we are today. Our past sponsors include Maybank, NAMZ, Tanoto Foundation, Bank of Indonesia, Martha Tilaar Group and Gramedia. The support from Embassy of the Republic of Indonesia in Singapore and corporate partners has enabled MKP to grow as a sustainable initiative every year and bring about meaningful contribution to the villages we visit.</p>
         </section>
       </SiteContainer>
 
       <SponsorArchive years={pastSponsors} />
 
       <SiteContainer>
-        <div className="mx-auto max-w-3xl py-10 sm:py-14">
+        <div className="py-10 sm:py-14">
           <p className="text-xs leading-5 text-muted-foreground">Past recognition follows <a href={SPONSOR_ARCHIVE_SOURCE} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">MKP’s original partners and sponsors archive<span className="sr-only"> (opens in a new tab)</span></a>.</p>
         </div>
       </SiteContainer>
