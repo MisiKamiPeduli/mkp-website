@@ -99,3 +99,17 @@ body {
     font-family: var(--font-heading);
   }
 }
+
+/* Gentle fade when a carousel slide appears; skipped for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .slide-fade {
+    animation: slide-fade 0.35s ease-out;
+  }
+}
+
+@keyframes slide-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}

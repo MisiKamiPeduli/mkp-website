@@ -19,8 +19,8 @@ const tierColors: Record<string, string> = {
 function Group({ label, names, note, tier }: { label: string; names: string[]; note?: string; tier?: string }) {
   return (
     <section>
-      <h4 className="flex items-center justify-center gap-2 font-sans text-base font-bold italic text-secondary-text">
-        {tier && tierColors[tier] && <span aria-hidden className={`size-2.5 rounded-full ${tierColors[tier]}`} />}
+      <h4 className="relative inline-block font-sans text-base font-bold italic text-secondary-text">
+        {tier && tierColors[tier] && <span aria-hidden className={`absolute -left-4 top-1/2 size-2.5 -translate-y-1/2 rounded-full ${tierColors[tier]}`} />}
         {label}
       </h4>
       <ul className="mt-2 space-y-1">
@@ -45,9 +45,10 @@ export function SponsorArchive({ years }: { years: SponsorYear[] }) {
 
           <div className="min-w-0 flex-1 text-center" aria-live="polite">
             {years.map((year, i) => (
-              <div key={year.year} role="group" aria-roledescription="slide" aria-label={`${year.year}, ${i + 1} of ${years.length}`} hidden={i !== index}>
+              <div key={year.year} role="group" aria-roledescription="slide" aria-label={`${year.year}, ${i + 1} of ${years.length}`} hidden={i !== index} className="slide-fade">
                 <h3 className="text-5xl font-bold tracking-[0.2em] text-secondary-text sm:text-6xl">{year.year}</h3>
-                <div className="mt-10 space-y-8">
+                <div aria-hidden className="mx-auto mt-5 h-0.5 w-12 bg-accent" />
+                <div className="mt-8 space-y-8">
                   <Group label="Partner NGO" names={year.partners} note={year.partnerNote} />
                   {year.tiers.map((tier) => <Group key={tier.name} label={`${tier.name} Sponsorship`} names={tier.sponsors} tier={tier.name} />)}
                   <Group label="Endorsed By" names={year.endorsements} />
@@ -59,9 +60,9 @@ export function SponsorArchive({ years }: { years: SponsorYear[] }) {
           <button type="button" onClick={() => go(index + 1)} aria-label={`Next year, ${years[(index + 1) % years.length].year}`} className="mt-40 shrink-0 rounded-full p-2 text-secondary-text transition-colors hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"><ChevronRight aria-hidden className="size-6" /></button>
         </div>
 
-        <div className="flex justify-center gap-2 pb-10">
+        <div role="group" aria-label="Choose a year" className="flex flex-wrap justify-center gap-2 pb-10">
           {years.map((year, i) => (
-            <button key={year.year} type="button" onClick={() => setIndex(i)} aria-label={`Show ${year.year}`} aria-current={i === index} className={`size-2.5 rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${i === index ? "bg-primary" : "bg-border hover:bg-muted-foreground"}`} />
+            <button key={year.year} type="button" onClick={() => setIndex(i)} aria-current={i === index} className={`min-h-9 rounded-full border px-4 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${i === index ? "border-secondary bg-secondary text-secondary-foreground" : "border-border bg-background/80 text-secondary-text hover:border-secondary"}`}>{year.year}</button>
           ))}
         </div>
       </SiteContainer>
