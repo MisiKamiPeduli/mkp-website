@@ -5,6 +5,7 @@ import { useRef, useState, type KeyboardEvent } from "react";
 import { SiteContainer } from "@/components/layout/site-container";
 import type { PastTeam, PastTeamMember } from "@/lib/team";
 
+const DIRECTORS = "Co-Project Directors";
 const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 const initials = (name: string) => name.split(" ").slice(0, 2).map((word) => word[0]).join("");
 
@@ -61,23 +62,26 @@ export function TeamArchive({ teams }: { teams: PastTeam[] }) {
                 {divisionsOf(team).map(({ division, members }) => (
                   <section key={division} aria-labelledby={`division-${team.year}-${slugify(division)}`}>
                     <h4 id={`division-${team.year}-${slugify(division)}`} className="border-b border-border pb-2 font-sans text-sm font-semibold text-secondary-text">{division}</h4>
-                    <ul className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
-                      {members.map((member) => (
-                        <li key={member.name} className="flex items-center gap-4">
-                          <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-muted">
-                            {member.image ? (
-                              <Image src={member.image} alt={`Portrait of ${member.name}`} fill sizes="64px" className="object-cover" />
-                            ) : (
-                              <span aria-hidden className="absolute inset-0 flex items-center justify-center text-sm font-medium text-muted-foreground">{initials(member.name)}</span>
-                            )}
-                          </div>
-                          <div className="min-w-0">
-                            <h5 className="text-sm font-semibold leading-snug text-secondary-text">{member.name}</h5>
-                            <p className="text-sm leading-5 text-foreground/85">{member.role}</p>
-                            <p className="text-xs leading-5 text-muted-foreground">{member.study}</p>
-                          </div>
-                        </li>
-                      ))}
+                    <ul className="mt-5 grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
+                      {members.map((member) => {
+                        const lead = division === DIRECTORS;
+                        return (
+                          <li key={member.name} className="flex items-center gap-4 rounded-lg p-2 -m-2 transition-colors hover:bg-muted">
+                            <div className={`relative shrink-0 overflow-hidden rounded-full bg-muted ${lead ? "size-24" : "size-16"}`}>
+                              {member.image ? (
+                                <Image src={member.image} alt={`Portrait of ${member.name}`} fill sizes={lead ? "96px" : "64px"} className="object-cover" />
+                              ) : (
+                                <span aria-hidden className="absolute inset-0 flex items-center justify-center text-sm font-medium text-muted-foreground">{initials(member.name)}</span>
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <h5 className={`font-semibold leading-snug text-secondary-text ${lead ? "text-base" : "text-sm"}`}>{member.name}</h5>
+                              <p className="text-sm leading-5 text-foreground/85">{member.role}</p>
+                              <p className="text-xs leading-5 text-muted-foreground">{member.study}</p>
+                            </div>
+                          </li>
+                        );
+                      })}
                     </ul>
                   </section>
                 ))}
