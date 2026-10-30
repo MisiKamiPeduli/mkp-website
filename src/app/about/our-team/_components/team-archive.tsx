@@ -55,29 +55,27 @@ export function TeamArchive({ teams }: { teams: PastTeam[] }) {
       <SiteContainer>
         <div className="mx-auto max-w-5xl">
           {teams.map((team) => (
-            <div key={team.year} id={`team-${team.year}`} role="tabpanel" aria-labelledby={`team-tab-${team.year}`} hidden={selected !== team.year} tabIndex={0} className="py-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:py-12">
-              <header className="mb-8 flex flex-wrap items-baseline gap-x-5 gap-y-2">
-                <h3 className="text-4xl italic leading-tight text-secondary-text sm:text-5xl">{team.year}</h3>
-                <p className="text-sm text-muted-foreground">{team.members.length} team members</p>
-              </header>
-
+            <div key={team.year} id={`team-${team.year}`} role="tabpanel" aria-labelledby={`team-tab-${team.year}`} hidden={selected !== team.year} tabIndex={0} className="py-10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
+              <h3 className="mb-8 text-3xl italic text-secondary-text sm:text-4xl">{team.year} team</h3>
               <div className="space-y-10">
                 {divisionsOf(team).map(({ division, members }) => (
                   <section key={division} aria-labelledby={`division-${team.year}-${slugify(division)}`}>
-                    <h4 id={`division-${team.year}-${slugify(division)}`} className="flex items-center gap-2 border-b border-border pb-3 font-sans text-[11px] font-semibold uppercase tracking-wide text-secondary-text"><span aria-hidden className="h-3 w-0.5 bg-primary" />{division}</h4>
-                    <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-8 sm:gap-x-6 md:grid-cols-3 lg:grid-cols-4">
+                    <h4 id={`division-${team.year}-${slugify(division)}`} className="border-b border-border pb-2 font-sans text-sm font-semibold text-secondary-text">{division}</h4>
+                    <ul className="mt-5 grid gap-x-8 gap-y-5 sm:grid-cols-2 lg:grid-cols-3">
                       {members.map((member) => (
-                        <li key={member.name}>
-                          <div className="relative aspect-4/5 overflow-hidden rounded-xl bg-muted">
+                        <li key={member.name} className="flex items-center gap-4">
+                          <div className="relative size-16 shrink-0 overflow-hidden rounded-full bg-muted">
                             {member.image ? (
-                              <Image src={member.image} alt={`Portrait of ${member.name}`} fill sizes="(min-width: 1024px) 256px, (min-width: 768px) 30vw, 46vw" className="object-cover" />
+                              <Image src={member.image} alt={`Portrait of ${member.name}`} fill sizes="64px" className="object-cover" />
                             ) : (
-                              <span aria-hidden className="absolute inset-0 flex items-center justify-center font-heading text-4xl italic text-muted-foreground">{initials(member.name)}</span>
+                              <span aria-hidden className="absolute inset-0 flex items-center justify-center text-sm font-medium text-muted-foreground">{initials(member.name)}</span>
                             )}
                           </div>
-                          <h5 className="mt-3 font-heading text-base leading-snug text-secondary-text">{member.name}</h5>
-                          <p className="mt-1 flex items-start gap-2 text-sm font-medium leading-5 text-foreground/85"><span aria-hidden className="mt-1 h-3 w-0.5 shrink-0 bg-primary" />{member.role}</p>
-                          <p className="mt-1 text-xs leading-5 text-muted-foreground">{member.study}</p>
+                          <div className="min-w-0">
+                            <h5 className="text-sm font-semibold leading-snug text-secondary-text">{member.name}</h5>
+                            <p className="text-sm leading-5 text-foreground/85">{member.role}</p>
+                            <p className="text-xs leading-5 text-muted-foreground">{member.study}</p>
+                          </div>
                         </li>
                       ))}
                     </ul>
