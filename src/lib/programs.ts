@@ -7,6 +7,10 @@ export type Program = {
     lat: number;
     lng: number;
   };
+  image?: {
+    src: string;
+    alt: string;
+  };
 };
 
 // TODO: temporary data, newest first. Coordinates are from OpenStreetMap
@@ -18,6 +22,7 @@ export const pastPrograms: Program[] = [
     title: "Desa Afia",
     description: "In 2024, Misi Kami Peduli (Mission: We Care) visited Desa Afia and empowerd the local community through various initiatives. The technology team successfully constructed a solar irrigation system, providing sustainable water solutions to support 80 hectares of paddy fields in Desa Tetehosi Afia. The education team organized a digital literacy case competition at Universitas Nias, fostering innovation and critical thinking among participants. Additionally, over 300 books were donated to Gunungsitoli’s children’s library, accompanied by a reading event aimed at promoting childhood literacy and a love for learning.",
     location: { name: "Nias, North Sumatra", lat: 1.3807, lng: 97.1938 },
+    image: { src: "/images/landing/impact-nias-2024.jpg", alt: "The MKP 2024 team gathered with their programme banner in Nias" },
   },
   {
     year: 2021,
@@ -30,6 +35,7 @@ export const pastPrograms: Program[] = [
     title: "Desa Waitaru",
     description: "In 2019, Misi Kami Peduli (Mission: We Care) visited Desa Waitaru with the aim to empower the local community. The technical team constructed a solar panel and wiring for 24 houses, including toilet and communal hall. The infrastructure team installed a solar water pump system including tanks and 300m long piping to provide a clean water source to the village. The education team conducted workshops regarding money-saving, healthcare, sanitation, and a small Kidzania in local primary school. We also conducted a teacher training program to motivate and inspire primary school teachers on Sumba Island.",
     location: { name: "Sumba, East Nusa Tenggara", lat: -9.75, lng: 120.1 },
+    image: { src: "/images/landing/impact-sumba-2019.jpg", alt: "MKP volunteers and community members outside a building in Sumba in 2019" },
   },
   {
     // Preserved from Wix: its heading says 2017 / Desa Homba Karipit,
@@ -81,6 +87,7 @@ export const pastPrograms: Program[] = [
       lat: -8.4084,
       lng: 116.1174,
     },
+    image: { src: "/images/landing/impact-lombok-2012.jpg", alt: "The MKP 2012 team with local participants in Lombok" },
   },
   {
     year: 2011,
