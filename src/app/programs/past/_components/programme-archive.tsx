@@ -31,6 +31,11 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
   const [headerHeight, setHeaderHeight] = useState<number>();
   const active = programs[activeIndex];
 
+  // Programmes without a photo hide the polaroid; it keeps the last photo while fading out.
+  const [shownIndex, setShownIndex] = useState(0);
+  if (active.image && shownIndex !== activeIndex) setShownIndex(activeIndex);
+  const shown = programs[shownIndex];
+
   // The programmes and photo sit below the sticky header, so track its height.
   useEffect(() => {
     const header = headerRef.current;
@@ -233,7 +238,12 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
           </div>
 
           <div className="hidden lg:sticky lg:top-[calc(5rem+var(--archive-header))] lg:flex lg:h-[calc(100svh-5rem-var(--archive-header))] lg:items-center lg:justify-center lg:self-start">
-            <div className="relative w-full max-w-lg -rotate-2">
+            <div
+              aria-hidden={!active.image}
+              className={`relative w-full max-w-lg -rotate-2 transition-opacity duration-500 motion-reduce:transition-none ${
+                active.image ? "opacity-100" : "opacity-0"
+              }`}
+            >
               <Polaroid className="pb-4 sm:pb-5">
                 <div className="relative aspect-4/3 overflow-hidden bg-neutral-100">
                   {programs.map((program, index) =>
@@ -241,35 +251,25 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
                       <Image
                         key={program.year}
                         src={program.image.src}
-                        alt={index === activeIndex ? program.image.alt : ""}
+                        alt={index === shownIndex ? program.image.alt : ""}
                         fill
                         sizes="(min-width: 1152px) 512px, 45vw"
                         className={`object-cover transition-opacity duration-500 motion-reduce:transition-none ${
-                          index === activeIndex ? "opacity-100" : "opacity-0"
+                          index === shownIndex ? "opacity-100" : "opacity-0"
                         }`}
                       />
                     ) : null,
                   )}
-                  <div
-                    aria-hidden
-                    className={`absolute inset-0 flex items-center justify-center bg-[repeating-linear-gradient(135deg,var(--color-neutral-100)_0_14px,var(--color-neutral-200)_14px_28px)] transition-opacity duration-500 motion-reduce:transition-none ${
-                      active.image ? "opacity-0" : "opacity-100"
-                    }`}
-                  >
-                    <span className="bg-neutral-100/90 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-500">
-                      Photo coming soon
-                    </span>
-                  </div>
                 </div>
                 <div
                   aria-hidden
                   className="mt-4 flex items-baseline justify-between gap-4 px-1"
                 >
                   <p className="font-heading text-lg leading-snug text-neutral-900">
-                    {active.title}
+                    {shown.title}
                   </p>
                   <p className="shrink-0 text-xs font-semibold tabular-nums text-neutral-600">
-                    {pad(activeIndex + 1)} / {pad(programs.length)}
+                    {pad(shownIndex + 1)} / {pad(programs.length)}
                   </p>
                 </div>
               </Polaroid>
@@ -277,7 +277,7 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
                 aria-hidden
                 className="absolute -right-4 -top-3 rotate-3 bg-accent px-3 py-1 text-xs font-bold tracking-wider text-accent-foreground shadow-sm"
               >
-                {active.year}
+                {shown.year}
               </span>
             </div>
           </div>
