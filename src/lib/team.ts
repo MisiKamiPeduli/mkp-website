@@ -26,9 +26,6 @@ export type PastTeam = {
   members: PastTeamMember[];
 };
 
-export const TEAM_ARCHIVE_SOURCE =
-  "https://directorsmkp.wixsite.com/misikamipeduli/meet-the-team";
-
 // Past teams from every slide of the original Wix archive, directors first and
 // then each division (head before members). Study programme and graduation
 // year (’26 etc.) are as listed at the time of each programme.

@@ -11,9 +11,6 @@ export type SponsorYear = {
   partnerNote?: string;
 };
 
-export const SPONSOR_ARCHIVE_SOURCE =
-  "https://directorsmkp.wixsite.com/misikamipeduli/our-partners-sponsors";
-
 // Historical recognition from every slide of the original Wix archive.
 // Sponsor tiers and year labels follow the source; these are not 2027 sponsors.
 export const pastSponsors: SponsorYear[] = [
