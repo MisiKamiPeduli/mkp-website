@@ -17,14 +17,14 @@ export function HomeContact() {
       <SiteContainer>
         <div className="mx-auto grid max-w-2xl items-start gap-8 md:grid-cols-[0.8fr_1.2fr] lg:max-w-5xl lg:gap-16">
           <div>
-            <h2 id="contact-heading" className="text-3xl font-bold leading-snug sm:text-4xl">Get in touch <span className="block italic text-secondary dark:text-foreground">with us.</span></h2>
+            <h2 id="contact-heading" className="text-3xl font-bold leading-snug sm:text-4xl">Get in touch <span className="block italic text-secondary">with us.</span></h2>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-foreground/75">Questions, ideas, or collaborations? We’d love to hear from you.</p>
-            <a href={`mailto:${siteConfig.contactEmail}`} className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-secondary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring dark:text-foreground">
+            <a href={`mailto:${siteConfig.contactEmail}`} className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-secondary underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">
               <Mail aria-hidden className="size-4 shrink-0 text-primary" />
               {siteConfig.contactEmail}
             </a>
             <div>
-              <ButtonLink href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" variant="link" size="sm" className="mt-4 gap-2 text-sm font-medium text-secondary dark:text-foreground">
+              <ButtonLink href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" variant="link" size="sm" className="mt-4 gap-2 text-sm font-medium text-secondary">
                 <InstagramIcon className="size-4 text-primary" /> @misikamipeduli <ArrowUpRight aria-hidden className="size-4" />
                 <span className="sr-only">(opens in a new tab)</span>
               </ButtonLink>

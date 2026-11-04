@@ -9,11 +9,14 @@ export function PageHero({
   title,
   description,
   imageSrc,
+  imagePosition,
 }: {
   breadcrumbs: NavLink[];
   title: ReactNode;
   description?: string;
   imageSrc: string;
+  // CSS object-position, for keeping faces in frame in the short, wide crop.
+  imagePosition?: string;
 }) {
   return (
     <section className="relative isolate overflow-hidden bg-secondary text-white">
@@ -25,6 +28,7 @@ export function PageHero({
         fetchPriority="high"
         sizes="100vw"
         className="-z-10 object-cover"
+        style={imagePosition ? { objectPosition: imagePosition } : undefined}
       />
       <div aria-hidden className="absolute inset-0 -z-10 bg-black/40" />
 

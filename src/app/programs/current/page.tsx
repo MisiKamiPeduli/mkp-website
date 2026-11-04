@@ -63,7 +63,7 @@ export default function CurrentProgramsPage() {
           </>
         }
         description="MKP 2027 · Way Kambas, Lampung"
-        imageSrc="/images/about/hero-wide.jpg"
+        imageSrc="/images/documentation/nias-2024-site.jpg"
       />
 
       <SiteContainer>

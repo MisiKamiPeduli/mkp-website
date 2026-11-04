@@ -3,6 +3,7 @@ import { Dancing_Script, Inter, Libre_Baskerville } from "next/font/google";
 import { ContactDialogProvider } from "@/components/contact/contact-dialog-provider";
 import { Footer } from "@/components/layout/footer";
 import { Navbar } from "@/components/layout/navbar";
+import { ScrollReveal } from "@/components/layout/scroll-reveal";
 import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
@@ -44,6 +45,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           <main className="flex-1">{children}</main>
           <Footer />
+          <ScrollReveal />
         </ContactDialogProvider>
       </body>
     </html>

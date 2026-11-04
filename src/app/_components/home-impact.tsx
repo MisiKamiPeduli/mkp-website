@@ -93,7 +93,7 @@ export function HomeImpact() {
                   </p>
                   <h3 className="mt-1 text-sm leading-snug">{story.title}</h3>
                   <p className="mt-2 flex items-baseline gap-2">
-                    <span className="font-heading text-2xl leading-none text-secondary dark:text-foreground">
+                    <span className="font-heading text-2xl leading-none text-secondary">
                       {story.value}
                     </span>
                     <span className="text-xs text-muted-foreground">{story.unit}</span>

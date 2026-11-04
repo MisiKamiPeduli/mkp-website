@@ -1,5 +1,9 @@
 "use client";
 
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import {
   type CSSProperties,
@@ -12,10 +16,15 @@ import { SiteContainer } from "@/components/layout/site-container";
 import { Polaroid } from "@/components/ui/polaroid";
 import type { Program } from "@/lib/programs";
 
-function scrollBehavior(): ScrollBehavior {
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ? "auto"
-    : "smooth";
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, useGSAP);
+
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+// Tween length in seconds, or instant for reduced motion.
+function duration(seconds: number) {
+  return prefersReducedMotion() ? 0 : seconds;
 }
 
 function pad(value: number) {
@@ -27,6 +36,10 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
   const headerRef = useRef<HTMLDivElement>(null);
   const yearsRef = useRef<HTMLUListElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+  const polaroidRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLSpanElement>(null);
+  const photosRef = useRef<HTMLDivElement>(null);
+  const animatedRef = useRef(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [headerHeight, setHeaderHeight] = useState<number>();
   const active = programs[activeIndex];
@@ -47,86 +60,137 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
     return () => observer.disconnect();
   }, []);
 
-  // The programme in view is the last one whose top has scrolled past 45% of the viewport.
+  // Header height shifts every programme's position, so re-measure the triggers.
   useEffect(() => {
-    const items = Array.from(
-      listRef.current?.querySelectorAll("article") ?? [],
-    );
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const line = window.innerHeight * 0.45;
-      setActiveIndex(
-        Math.max(
-          items.findLastIndex(
-            (item) => item.getBoundingClientRect().top <= line,
-          ),
-          0,
-        ),
+    if (headerHeight) ScrollTrigger.refresh();
+  }, [headerHeight]);
+
+  useGSAP(
+    () => {
+      const section = sectionRef.current;
+      const items = gsap.utils.toArray<HTMLElement>("article", listRef.current);
+      if (!section) return;
+
+      // The programme in view is the last one whose top has scrolled past 45% of the viewport.
+      items.forEach((item, index) => {
+        ScrollTrigger.create({
+          trigger: item,
+          start: "top 45%",
+          onEnter: () => setActiveIndex(index),
+          onLeaveBack: () => setActiveIndex(Math.max(index - 1, 0)),
+        });
+      });
+
+      // When scrolling stops inside the hero, finish the move: down to the archive, or back to the top.
+      ScrollTrigger.create({
+        start: 0,
+        end: () =>
+          section.getBoundingClientRect().top +
+          window.scrollY -
+          parseFloat(getComputedStyle(section).scrollMarginTop),
+        snap: prefersReducedMotion()
+          ? undefined
+          : {
+              snapTo: [0, 1],
+              directional: true,
+              delay: 0.1,
+              duration: { min: 0.3, max: 0.7 },
+              ease: "power2.inOut",
+            },
+      });
+    },
+    { scope: sectionRef },
+  );
+
+  // Dim every programme except the active one.
+  useGSAP(
+    () => {
+      const items = gsap.utils.toArray<HTMLElement>("article", listRef.current);
+      items.forEach((item, index) =>
+        gsap.to(item, {
+          opacity: index === activeIndex ? 1 : 0.35,
+          duration: animatedRef.current ? duration(0.3) : 0,
+          overwrite: "auto",
+        }),
       );
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
+    },
+    { dependencies: [activeIndex], scope: sectionRef },
+  );
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      cancelAnimationFrame(frame);
-    };
-  }, []);
+  // Programmes without a photo fade the whole polaroid out.
+  useGSAP(
+    () => {
+      gsap.to(polaroidRef.current, {
+        autoAlpha: active.image ? 1 : 0,
+        duration: animatedRef.current ? duration(0.5) : 0,
+        overwrite: "auto",
+      });
+    },
+    { dependencies: [Boolean(active.image)], scope: sectionRef },
+  );
 
-  // When scrolling stops inside the hero, finish the move: down to the archive, or back to the top.
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    let lastY = window.scrollY;
-    let timer = 0;
+  // Swap the polaroid photo with a crossfade and a badge pop.
+  useGSAP(
+    () => {
+      const photos = gsap.utils.toArray<HTMLElement>("[data-photo]", photosRef.current);
+      const incoming = photos.find((photo) => photo.dataset.photo === String(shownIndex));
+      const outgoing = photos.filter((photo) => photo !== incoming);
 
-    const settle = () => {
-      const y = window.scrollY;
-      const archiveY =
-        section.getBoundingClientRect().top +
-        y -
-        parseFloat(getComputedStyle(section).scrollMarginTop);
-      if (y > 0 && y < archiveY - 1) {
-        if (y > lastY) section.scrollIntoView({ behavior: scrollBehavior() });
-        else window.scrollTo({ top: 0, behavior: scrollBehavior() });
+      if (!animatedRef.current) {
+        gsap.set(outgoing, { opacity: 0 });
+        gsap.set(incoming ?? [], { opacity: 1 });
+        animatedRef.current = true;
+        return;
       }
-      lastY = y;
-    };
-    // scrollend waits for touch release and momentum; fall back to a short pause elsewhere.
-    const event = "onscrollend" in window ? "scrollend" : "scroll";
-    const onScroll = () => {
-      if (event === "scrollend") return settle();
-      clearTimeout(timer);
-      timer = window.setTimeout(settle, 150);
-    };
 
-    window.addEventListener(event, onScroll, { passive: true });
-    return () => {
-      window.removeEventListener(event, onScroll);
-      clearTimeout(timer);
-    };
-  }, []);
+      gsap.to(outgoing, { opacity: 0, duration: duration(0.5), overwrite: "auto" });
+      if (incoming) {
+        gsap.fromTo(
+          incoming,
+          { opacity: 0, scale: 1.06 },
+          { opacity: 1, scale: 1, duration: duration(0.7), ease: "power2.out", overwrite: "auto" },
+        );
+      }
+      // Tailwind's rotate classes use the separate CSS `rotate` property, so
+      // this rotation is an offset on top of the badge's tilt in the markup.
+      gsap.fromTo(
+        badgeRef.current,
+        { scale: 0.7, rotate: 7 },
+        { scale: 1, rotate: 0, duration: duration(0.5), ease: "back.out(2)", overwrite: "auto" },
+      );
+    },
+    { dependencies: [shownIndex], scope: sectionRef },
+  );
 
   // On narrow screens the years scroll sideways; keep the active one in view.
   useEffect(() => {
     const years = yearsRef.current;
     const pill = years?.children[activeIndex] as HTMLElement | undefined;
     if (!years || !pill) return;
-    years.scrollTo({
-      left: pill.offsetLeft - (years.clientWidth - pill.offsetWidth) / 2,
-      behavior: scrollBehavior(),
+    gsap.to(years, {
+      scrollTo: {
+        x: pill.offsetLeft - (years.clientWidth - pill.offsetWidth) / 2,
+      },
+      duration: duration(0.4),
+      ease: "power2.out",
+      overwrite: "auto",
     });
   }, [activeIndex]);
 
   function jumpTo(event: MouseEvent<HTMLAnchorElement>, id: string) {
     event.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: scrollBehavior() });
+    const target = document.getElementById(id);
+    if (!target) return;
+    gsap.to(window, {
+      scrollTo: {
+        y: target,
+        // Articles carry a scroll margin that clears the navbar and sticky header.
+        offsetY: parseFloat(getComputedStyle(target).scrollMarginTop) || 0,
+      },
+      duration: duration(0.9),
+      ease: "power2.inOut",
+      overwrite: "auto",
+    });
     history.replaceState(null, "", `#${id}`);
   }
 
@@ -194,14 +258,12 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
       <SiteContainer>
         <div className="lg:grid lg:grid-cols-2 lg:gap-16">
           <div ref={listRef}>
-            {programs.map((program, index) => (
+            {programs.map((program) => (
               <article
                 key={program.year}
                 id={`programme-${program.year}`}
                 aria-labelledby={`programme-${program.year}-title`}
-                className={`scroll-mt-[calc(4rem+var(--archive-header))] border-b border-border py-10 transition-opacity duration-300 last:border-b-0 motion-reduce:transition-none lg:min-h-[26rem] lg:scroll-mt-[calc(5rem+var(--archive-header))] lg:py-12 ${
-                  index === activeIndex ? "" : "opacity-35"
-                }`}
+                className="scroll-mt-[calc(4rem+var(--archive-header))] border-b border-border py-10 last:border-b-0 lg:min-h-[26rem] lg:scroll-mt-[calc(5rem+var(--archive-header))] lg:py-12"
               >
                 {program.image && (
                   <div className="relative mb-6 aspect-3/2 overflow-hidden bg-muted lg:hidden">
@@ -239,25 +301,31 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
 
           <div className="hidden lg:sticky lg:top-[calc(5rem+var(--archive-header))] lg:flex lg:h-[calc(100svh-5rem-var(--archive-header))] lg:items-center lg:justify-center lg:self-start">
             <div
+              ref={polaroidRef}
               aria-hidden={!active.image}
-              className={`relative w-full max-w-lg -rotate-2 transition-opacity duration-500 motion-reduce:transition-none ${
-                active.image ? "opacity-100" : "opacity-0"
-              }`}
+              className="relative w-full max-w-lg -rotate-2"
             >
               <Polaroid className="pb-4 sm:pb-5">
-                <div className="relative aspect-4/3 overflow-hidden bg-neutral-100">
+                <div
+                  ref={photosRef}
+                  className="relative aspect-4/3 overflow-hidden bg-neutral-100"
+                >
                   {programs.map((program, index) =>
                     program.image ? (
-                      <Image
+                      // Opacity is driven by GSAP; the class only covers first paint.
+                      <div
                         key={program.year}
-                        src={program.image.src}
-                        alt={index === shownIndex ? program.image.alt : ""}
-                        fill
-                        sizes="(min-width: 1152px) 512px, 45vw"
-                        className={`object-cover transition-opacity duration-500 motion-reduce:transition-none ${
-                          index === shownIndex ? "opacity-100" : "opacity-0"
-                        }`}
-                      />
+                        data-photo={index}
+                        className={`absolute inset-0 ${index === 0 ? "" : "opacity-0"}`}
+                      >
+                        <Image
+                          src={program.image.src}
+                          alt={index === shownIndex ? program.image.alt : ""}
+                          fill
+                          sizes="(min-width: 1152px) 512px, 45vw"
+                          className="object-cover"
+                        />
+                      </div>
                     ) : null,
                   )}
                 </div>
@@ -274,6 +342,7 @@ export function ProgrammeArchive({ programs }: { programs: Program[] }) {
                 </div>
               </Polaroid>
               <span
+                ref={badgeRef}
                 aria-hidden
                 className="absolute -right-4 -top-3 rotate-3 bg-accent px-3 py-1 text-xs font-bold tracking-wider text-accent-foreground shadow-sm"
               >

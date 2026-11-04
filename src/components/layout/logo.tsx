@@ -31,7 +31,7 @@ export function Logo({
   className,
   onClick,
 }: {
-  // "auto" follows the colour scheme; force "white" on dark surfaces like the footer.
+  // "auto" is the black logo while the site is light-only; force "white" on dark surfaces like the footer.
   variant?: LogoVariant;
   className?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement>;
@@ -46,14 +46,8 @@ export function Logo({
         className,
       )}
     >
-      {variant === "auto" ? (
-        <>
-          <LogoImage variant="black" className="dark:hidden" />
-          <LogoImage variant="white" className="hidden dark:block" />
-        </>
-      ) : (
-        <LogoImage variant={variant} />
-      )}
+      {/* Light mode only for now, so "auto" always uses the black logo. */}
+      <LogoImage variant={variant === "auto" ? "black" : variant} />
     </Link>
   );
 }

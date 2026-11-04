@@ -27,7 +27,8 @@ export default function AboutPage() {
           </>
         }
         description="Indonesian students at the National University of Singapore, reaching out to alleviate socio-economic challenges in Indonesia"
-        imageSrc="/images/about/hero-wide.jpg"
+        imageSrc="/images/documentation/nias-2024-team-panels.jpg"
+        imagePosition="center 55%"
       />
       <AboutIntro />
       <VisionSection />

@@ -16,6 +16,7 @@ export default function OurTeamPage() {
         title={<>Our <span className="italic text-accent">Team</span></>}
         description="The students who gave their time and effort to every MKP programme."
         imageSrc="/images/team/hero.jpg"
+        imagePosition="center 25%"
       />
 
       <TeamArchive teams={[...pastTeams].sort((a, b) => b.year - a.year)} />
