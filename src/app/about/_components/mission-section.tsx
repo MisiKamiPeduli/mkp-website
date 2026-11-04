@@ -26,8 +26,8 @@ export function MissionSection() {
             <Polaroid className="rotate-3">
               <div className="relative aspect-4/3 bg-muted lg:aspect-5/4">
                 <Image
-                  src="/images/about/mission.jpg"
-                  alt="The MKP team at work in a village"
+                  src="/images/documentation/nias-2024-control-box.jpg"
+                  alt="A solar control box being installed as village children and residents look on"
                   fill
                   sizes="(min-width: 1024px) 512px, 90vw"
                   className="object-cover"

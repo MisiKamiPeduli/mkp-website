@@ -8,9 +8,7 @@ import sharp from "sharp";
 const ROOT = path.resolve(import.meta.dirname, "../public/images");
 const MIN_SAVING = 0.1;
 
-function maxWidth(file) {
-  return path.basename(file).startsWith("hero.") ? 1920 : 1080;
-}
+const MAX_WIDTH = 2400;
 
 function encode(pipeline, ext) {
   return ext === ".png"
@@ -27,7 +25,7 @@ async function optimize(file) {
   const input = await readFile(file);
   const pipeline = sharp(input)
     .rotate()
-    .resize({ width: maxWidth(file), withoutEnlargement: true });
+    .resize({ width: MAX_WIDTH, withoutEnlargement: true });
   const output = await encode(pipeline, ext).toBuffer();
   const name = path.relative(ROOT, file);
 

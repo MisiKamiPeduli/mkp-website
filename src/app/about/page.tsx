@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/page-hero";
 import { AboutIntro } from "./_components/about-intro";
 import { ExploreProgramsCta } from "./_components/explore-programs-cta";
+import { FieldGallery } from "./_components/field-gallery";
 import { FootprintsSection } from "./_components/footprints-section";
 import { MissionSection } from "./_components/mission-section";
 import { PillarsSection } from "./_components/pillars-section";
@@ -27,13 +28,14 @@ export default function AboutPage() {
           </>
         }
         description="Indonesian students at the National University of Singapore, reaching out to alleviate socio-economic challenges in Indonesia"
-        imageSrc="/images/about/hero.jpg"
+        imageSrc="/images/about/hero-wide.jpg"
       />
       <AboutIntro />
       <VisionSection />
       <MissionSection />
       <PillarsSection />
       <FootprintsSection />
+      <FieldGallery />
       <ExploreProgramsCta />
     </>
   );

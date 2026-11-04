@@ -106,7 +106,7 @@ export function AboutIntro() {
             <Polaroid className="absolute top-6 left-0 w-[58%] -rotate-6">
               <div className="relative aspect-4/3 bg-muted">
                 <Image
-                  src="/images/about/about-us-1.jpg"
+                  src="/images/about/team-banner-group.jpg"
                   alt="MKP volunteers with local residents"
                   fill
                   sizes="(min-width: 1024px) 260px, 60vw"

@@ -11,7 +11,7 @@ const impactStories = [
     unit: "books donated",
     title: "Books and digital learning in Nias",
     year: "2024",
-    image: "/images/landing/impact-nias-2024.jpg",
+    image: "/images/about/nias-2024-banner.jpg",
     alt: "MKP 2024 project activities in Nias",
   },
   {
@@ -19,7 +19,7 @@ const impactStories = [
     unit: "houses connected to solar power",
     title: "Solar power in Desa Waitaru",
     year: "2019",
-    image: "/images/landing/impact-sumba-2019.jpg",
+    image: "/images/landing/impact-sumba-2019-full.jpg",
     alt: "MKP 2019 project activities in Sumba",
   },
   {

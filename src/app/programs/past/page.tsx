@@ -24,7 +24,7 @@ export default function PastProgramsPage() {
           </>
         }
         description="Education, clean energy, and clean water programmes, built alongside local communities since 2009"
-        imageSrc="/images/about/about-us-1.jpg"
+        imageSrc="/images/about/team-banner-group.jpg"
       />
 
       <ProgrammeArchive programs={pastPrograms} />

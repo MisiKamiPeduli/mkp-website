@@ -40,8 +40,8 @@ export function ExploreProgramsCta() {
             <Polaroid className="rotate-3">
               <div className="relative aspect-4/3 bg-muted">
                 <Image
-                  src="/images/about/programs.jpg"
-                  alt="An MKP program in action"
+                  src="/images/documentation/nias-2024-water-tank.jpg"
+                  alt="The MKP team beside a tank filling with pumped water"
                   fill
                   sizes="(min-width: 640px) 384px, 90vw"
                   className="object-cover"
