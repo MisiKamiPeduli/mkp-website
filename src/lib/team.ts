@@ -599,7 +599,7 @@ export const pastTeams: PastTeam[] = [
         "role": "Member",
         "division": "Public Relations",
         "study": "Data Science and Analytics ’27",
-        "image": "/images/team/2024/melisa-abigail-thevandi.jpg"
+        "image": "/images/team/2024/melisa-abigail-thevandi-portrait.jpg"
       },
       {
         "name": "Jayson Ng",
