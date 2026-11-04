@@ -8,7 +8,6 @@ export type SponsorYear = {
   partners: string[];
   tiers: SponsorTier[];
   endorsements: string[];
-  partnerNote?: string;
 };
 
 // Historical recognition from every slide of the original Wix archive.
@@ -249,7 +248,6 @@ export const pastSponsors: SponsorYear[] = [
     ],
     "endorsements": [
       "Kedutaan Besar Republik Indonesia di Singapura"
-    ],
-    "partnerNote": "The original archive lists this partner only as “Foundation”."
+    ]
   }
 ];
