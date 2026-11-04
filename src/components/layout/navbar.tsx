@@ -1,12 +1,12 @@
 "use client";
 
-import { ChevronDown, Mail, Menu } from "lucide-react";
+import { ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { navItems, siteConfig } from "@/lib/site-config";
-import { ContactDialog } from "@/components/contact/contact-dialog";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { navItems } from "@/lib/site-config";
+import { useContactDialog } from "@/components/contact/contact-dialog-provider";
+import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
 import { SiteContainer } from "./site-container";
@@ -15,7 +15,7 @@ export function Navbar() {
   const pathname = usePathname();
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [contactOpen, setContactOpen] = useState(false);
+  const { openContact } = useContactDialog();
   const navRef = useRef<HTMLElement>(null);
 
   const [lastPathname, setLastPathname] = useState(pathname);
@@ -48,7 +48,6 @@ export function Navbar() {
   }, []);
 
   const closeMobileMenu = useCallback(() => setMobileOpen(false), []);
-  const closeContact = useCallback(() => setContactOpen(false), []);
 
   function isCurrentSection(href: string) {
     return href === "/"
@@ -147,19 +146,11 @@ export function Navbar() {
 
           <div className="hidden items-center gap-4 justify-self-end lg:flex">
             <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Contact us"
-              onClick={() => setContactOpen(true)}
-            >
-              <Mail className="size-5" />
-            </Button>
-            <ButtonLink
-              href={siteConfig.donateUrl}
+              onClick={openContact}
               className="font-semibold uppercase tracking-wide"
             >
-              Donate
-            </ButtonLink>
+              Support us
+            </Button>
           </div>
 
           <Button
@@ -183,12 +174,11 @@ export function Navbar() {
           onClose={closeMobileMenu}
           onContact={() => {
             setMobileOpen(false);
-            setContactOpen(true);
+            openContact();
           }}
         />
       )}
 
-      <ContactDialog open={contactOpen} onClose={closeContact} />
     </header>
   );
 }

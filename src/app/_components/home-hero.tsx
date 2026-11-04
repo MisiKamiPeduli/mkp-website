@@ -4,8 +4,8 @@ import { ArrowRight, ChevronLeft, ChevronRight, HandHeart } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { SiteContainer } from "@/components/layout/site-container";
-import { ButtonLink } from "@/components/ui/button";
-import { siteConfig } from "@/lib/site-config";
+import { useContactDialog } from "@/components/contact/contact-dialog-provider";
+import { Button, ButtonLink } from "@/components/ui/button";
 
 // Reuse existing MKP photos until the original homepage assets are supplied.
 const slides = [
@@ -47,6 +47,7 @@ const stats = [
 ];
 
 export function HomeHero() {
+  const { openContact } = useContactDialog();
   const [activeIndex, setActiveIndex] = useState(0);
   const active = slides[activeIndex];
 
@@ -93,14 +94,12 @@ export function HomeHero() {
               <h1 className="mt-5 text-3xl leading-[1.2] sm:text-4xl lg:text-[46px]">{active.title}</h1>
               <p className="mx-auto mt-5 max-w-2xl text-xs leading-relaxed text-white/90 sm:text-sm">{active.description}</p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-                <ButtonLink
-                  href={siteConfig.donateUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Button
+                  onClick={openContact}
                   variant="secondary"
                   size="sm"
                   className="gap-2 px-5 text-[11px] font-semibold uppercase"
-                ><HandHeart aria-hidden className="size-4" /> Donate now</ButtonLink>
+                ><HandHeart aria-hidden className="size-4" /> Support us</Button>
                 <ButtonLink href={active.href} size="sm" className="gap-2 px-5 text-[11px] font-semibold uppercase">Learn more <ArrowRight aria-hidden className="size-4" /></ButtonLink>
               </div>
             </div>
