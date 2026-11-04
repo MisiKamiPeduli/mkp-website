@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { PageHero } from "@/components/layout/page-hero";
 import { AboutIntro } from "./_components/about-intro";
 import { ExploreProgramsCta } from "./_components/explore-programs-cta";
-import { FieldGallery } from "./_components/field-gallery";
 import { FootprintsSection } from "./_components/footprints-section";
 import { MissionSection } from "./_components/mission-section";
 import { PillarsSection } from "./_components/pillars-section";
@@ -35,7 +34,6 @@ export default function AboutPage() {
       <MissionSection />
       <PillarsSection />
       <FootprintsSection />
-      <FieldGallery />
       <ExploreProgramsCta />
     </>
   );

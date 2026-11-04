@@ -5,9 +5,15 @@ import { socialLinks } from "@/components/icons/social-icons";
 import { SiteContainer } from "@/components/layout/site-container";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { Polaroid } from "@/components/ui/polaroid";
-import { teamMembers } from "@/lib/team";
+import { pastTeams } from "@/lib/team";
 
-const previewMembers = teamMembers.slice(0, 4);
+// One face from each past team, so the preview spans MKP's years.
+const previewMembers = pastTeams
+  .map((team) => team.members.find((member) => member.image))
+  .filter((member): member is NonNullable<typeof member> & { image: string } =>
+    Boolean(member?.image),
+  )
+  .slice(0, 4);
 
 export function AboutIntro() {
   return (
@@ -47,7 +53,7 @@ export function AboutIntro() {
               className="group mt-8 flex flex-col gap-5 rounded-xl bg-muted p-5 transition-colors hover:bg-muted/70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:flex-row sm:items-center sm:justify-between"
             >
               <div className="flex items-center gap-3">
-                <div aria-hidden className="flex -space-x-3">
+                <div aria-hidden className="flex shrink-0 -space-x-3">
                   {previewMembers.map((member) => (
                     <Image
                       key={member.name}
@@ -55,19 +61,19 @@ export function AboutIntro() {
                       alt=""
                       width={36}
                       height={36}
-                      className="size-9 rounded-full bg-background object-cover ring-2 ring-muted"
+                      className="size-9 shrink-0 rounded-full bg-background object-cover ring-2 ring-muted"
                     />
                   ))}
-                  <span className="flex size-9 items-center justify-center rounded-full bg-secondary text-secondary-foreground ring-2 ring-muted">
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground ring-2 ring-muted">
                     <Plus className="size-4" />
                   </span>
                 </div>
                 <p className="text-sm leading-snug">
                   <strong className="text-secondary-text">
-                    {teamMembers.length} NUS students
+                    Hundreds of NUS students
                   </strong>
                   <br />
-                  are behind MKP
+                  have been part of MKP
                 </p>
               </div>
               {/* Styled as a button, but the whole card is the link. */}

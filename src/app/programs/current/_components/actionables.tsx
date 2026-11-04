@@ -1,9 +1,9 @@
 "use client";
 
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useCarousel } from "@/components/ui/use-carousel";
 import { Polaroid } from "@/components/ui/polaroid";
 
 const actionables = [
@@ -38,17 +38,23 @@ function pad(value: number) {
 }
 
 export function Actionables() {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const {
+    activeIndex,
+    setActiveIndex,
+    step,
+    paused,
+    togglePaused,
+    rotationProps,
+    liveMode,
+  } = useCarousel(actionables.length);
   const active = actionables[activeIndex];
 
-  function step(delta: number) {
-    setActiveIndex(
-      (index) => (index + delta + actionables.length) % actionables.length,
-    );
-  }
-
   return (
-    <section aria-labelledby="actionables-heading" className="py-16 sm:py-24">
+    <section
+      aria-labelledby="actionables-heading"
+      className="py-16 sm:py-24"
+      {...rotationProps}
+    >
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <h2
@@ -106,6 +112,16 @@ export function Actionables() {
             >
               <ArrowRight />
             </Button>
+            <Button
+              size="icon"
+              variant="ghost"
+              aria-label={paused ? "Play slideshow" : "Pause slideshow"}
+              aria-controls="actionable-details"
+              onClick={togglePaused}
+              className="border border-border"
+            >
+              {paused ? <Play /> : <Pause />}
+            </Button>
           </div>
         </div>
       </div>
@@ -126,7 +142,7 @@ export function Actionables() {
 
         <div
           id="actionable-details"
-          aria-live="polite"
+          aria-live={liveMode}
           aria-atomic="true"
           className="relative z-10 mx-4 -mt-6 bg-primary p-6 text-primary-foreground shadow-xl sm:mx-8 sm:p-8 md:col-[7/13] md:row-1 md:mx-0 md:mt-0"
         >
