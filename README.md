@@ -133,8 +133,7 @@ re-run the script.
 including the six slideshow panels: 2024, 2019, 2017, 2016, 2015, and 2014.
 Names use readable capitalisation; the original years and tier assignments are
 preserved. NGO partners, sponsors, and endorsements are listed
-separately. The 2014 NGO is named only “Foundation” in the source and is marked
-accordingly. These records do not represent secured sponsorship for MKP 2027.
+separately. The 2014 NGO is named only “Foundation” in the source. These records do not represent secured sponsorship for MKP 2027.
 
 The archive is rendered at `/about/past-sponsors`. Its photograph is downloaded
 from the same Wix page into `public/images/sponsors/hero.jpg`. The source does
