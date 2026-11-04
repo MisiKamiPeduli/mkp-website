@@ -125,3 +125,17 @@ Countries use their ISO 3166 alpha-3 code (e.g. `BRN` for Brunei, `TLS` for
 Timor-Leste). In development, a program whose coordinates fall outside
 `BOUNDS` stops the page with an error naming the program; widen `BOUNDS` and
 re-run the script.
+
+## Past sponsors archive
+
+`src/lib/sponsors.ts` contains every year and sponsorship tier from
+[MKP’s original partners and sponsors page](https://directorsmkp.wixsite.com/misikamipeduli/our-partners-sponsors),
+including the six slideshow panels: 2024, 2019, 2017, 2016, 2015, and 2014.
+Names use readable capitalisation; the original years and tier assignments are
+preserved. NGO partners, sponsors, and endorsements are listed
+separately. The 2014 NGO is named only “Foundation” in the source and is marked
+accordingly. These records do not represent secured sponsorship for MKP 2027.
+
+The archive is rendered at `/about/past-sponsors`. Its photograph is downloaded
+from the same Wix page into `public/images/sponsors/hero.jpg`. The source does
+not provide sponsor logos, so the page recognises sponsors by name.

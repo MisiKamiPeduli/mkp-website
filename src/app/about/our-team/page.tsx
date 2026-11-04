@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/layout/page-header";
-import { SiteContainer } from "@/components/layout/site-container";
+import { PageHero } from "@/components/layout/page-hero";
+import { pastTeams } from "@/lib/team";
+import { TeamArchive } from "./_components/team-archive";
 
 export const metadata: Metadata = {
   title: "Our Team",
+  description: "Meet the students who led MKP’s past programmes. Browse the 2024, 2021, 2020, and 2019 teams.",
 };
 
 export default function OurTeamPage() {
   return (
-    <SiteContainer>
-      <PageHeader
-        title="Our Team"
-        description="Profiles of the people behind MKP will be presented here."
+    <>
+      <PageHero
+        breadcrumbs={[{ label: "Home", href: "/" }, { label: "About Us", href: "/about" }, { label: "Our Team", href: "/about/our-team" }]}
+        title={<>Our <span className="italic text-accent">Team</span></>}
+        description="The students who gave their time and effort to every MKP programme."
+        imageSrc="/images/team/hero.jpg"
       />
-    </SiteContainer>
+
+      <TeamArchive teams={[...pastTeams].sort((a, b) => b.year - a.year)} />
+    </>
   );
 }
