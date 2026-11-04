@@ -32,7 +32,7 @@ export function VisionSection() {
             <Polaroid className="relative -rotate-3">
               <div className="relative aspect-4/3 bg-muted">
                 <Image
-                  src="/images/about/vision.jpg"
+                  src="/images/about/vision-2x.jpg"
                   alt="An education session run by MKP"
                   fill
                   sizes="(min-width: 768px) 448px, 90vw"
