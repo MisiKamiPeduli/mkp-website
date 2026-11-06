@@ -3,10 +3,10 @@ import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { PageHero } from "@/components/layout/page-hero";
 import { SiteContainer } from "@/components/layout/site-container";
+import { SupportUsButton } from "@/components/contact/contact-dialog-provider";
 import { ButtonLink } from "@/components/ui/button";
 import { Polaroid } from "@/components/ui/polaroid";
 import { pastPrograms } from "@/lib/programs";
-import { siteConfig } from "@/lib/site-config";
 import { Actionables } from "./_components/actionables";
 
 export const metadata: Metadata = {
@@ -63,7 +63,7 @@ export default function CurrentProgramsPage() {
           </>
         }
         description="MKP 2027 · Way Kambas, Lampung"
-        imageSrc="/images/about/hero-wide.jpg"
+        imageSrc="/images/documentation/nias-2024-site.jpg"
       />
 
       <SiteContainer>
@@ -211,7 +211,7 @@ export default function CurrentProgramsPage() {
       </section>
 
       <SiteContainer>
-        <section aria-labelledby="donate-heading" className="pt-20 sm:pt-28">
+        <section aria-labelledby="support-heading" className="pt-20 sm:pt-28">
           <div className="relative isolate grid items-center gap-10 overflow-hidden rounded-3xl bg-accent/15 px-6 py-12 sm:px-12 sm:py-16 lg:grid-cols-2">
             <div
               aria-hidden
@@ -222,22 +222,21 @@ export default function CurrentProgramsPage() {
                 Support MKP 2027
               </p>
               <h2
-                id="donate-heading"
+                id="support-heading"
                 className="mt-4 text-4xl font-bold sm:text-5xl"
               >
-                Want to <span className="italic text-primary">donate</span>?
+                Want to <span className="italic text-primary">support</span> us?
               </h2>
               <p className="mt-5 max-w-md text-sm leading-relaxed text-foreground/80 sm:text-base">
-                Every contribution goes straight into the programmes we&apos;re
-                running with the community in Way Kambas this year.
+                Funding, resources, or media: every bit of help goes straight
+                into the programmes we&apos;re running with the community in
+                Way Kambas this year. Get in touch and we&apos;ll find a way to
+                work together.
               </p>
-              <ButtonLink
-                href={siteConfig.donateUrl}
-                className="mt-8 font-semibold uppercase tracking-wide"
-              >
-                Donate now
+              <SupportUsButton className="mt-8 font-semibold uppercase tracking-wide">
+                Support us
                 <ArrowRight />
-              </ButtonLink>
+              </SupportUsButton>
             </div>
 
             <div className="relative mx-auto w-full max-w-sm pb-6">

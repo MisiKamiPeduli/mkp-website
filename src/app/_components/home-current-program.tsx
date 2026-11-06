@@ -2,6 +2,7 @@ import { ArrowRight, HandHeart } from "lucide-react";
 import Image from "next/image";
 import { InstagramIcon } from "@/components/icons/social-icons";
 import { SiteContainer } from "@/components/layout/site-container";
+import { SupportUsButton } from "@/components/contact/contact-dialog-provider";
 import { ButtonLink } from "@/components/ui/button";
 import { siteConfig } from "@/lib/site-config";
 
@@ -44,7 +45,7 @@ export function HomeCurrentProgram() {
               <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 font-semibold text-primary hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"><InstagramIcon className="size-3.5" /> misikamipeduli</a>
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <ButtonLink href={siteConfig.donateUrl} target="_blank" rel="noopener noreferrer" variant="secondary" size="sm" className="gap-2 px-4 text-[11px] font-semibold uppercase"><HandHeart aria-hidden className="size-3.5" /> Donate now</ButtonLink>
+              <SupportUsButton variant="secondary" size="sm" className="gap-2 px-4 text-[11px] font-semibold uppercase"><HandHeart aria-hidden className="size-3.5" /> Support us</SupportUsButton>
               <ButtonLink href="/programs/current" size="sm" className="gap-2 px-4 text-[11px] font-semibold uppercase">Learn more <ArrowRight aria-hidden className="size-3.5" /></ButtonLink>
             </div>
           </div>

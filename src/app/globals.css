@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  /* Light mode only for now: keep native controls and scrollbars light too. */
+  color-scheme: light;
+
   --radius: 0.5rem;
 
   --background: #ffffff;
@@ -24,26 +27,6 @@
   --border: #e5e5e5;
   --input: #e5e5e5;
   --ring: #1e3070;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --card: #171717;
-    --card-foreground: #ededed;
-    --popover: #171717;
-    --popover-foreground: #ededed;
-
-    --secondary-text: var(--foreground);
-
-    --muted: #262626;
-    --muted-foreground: #a3a3a3;
-    --destructive: #ef4444;
-    --border: #ffffff1a;
-    --input: #ffffff26;
-    --ring: #eab520;
-  }
 }
 
 @theme inline {

@@ -1,10 +1,10 @@
 "use client";
 
-import { ChevronDown, Mail, X } from "lucide-react";
+import { ChevronDown, X } from "lucide-react";
 import Link from "next/link";
 import { useLayoutEffect, useRef, useState } from "react";
-import { navItems, siteConfig } from "@/lib/site-config";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { navItems } from "@/lib/site-config";
+import { Button } from "@/components/ui/button";
 import { Logo } from "./logo";
 import { SiteContainer } from "./site-container";
 
@@ -157,20 +157,12 @@ export function MobileMenu({
 
       <div className="shrink-0 border-t border-border bg-background pb-[env(safe-area-inset-bottom)]">
         <SiteContainer>
-          <div className="grid grid-cols-2 gap-3 py-4">
-            <ButtonLink
-              href={siteConfig.donateUrl}
-              className="h-11 text-sm font-semibold uppercase tracking-wide"
-            >
-              Donate
-            </ButtonLink>
+          <div className="py-4">
             <Button
-              variant="ghost"
               onClick={onContact}
-              className="h-11 border border-border text-sm"
+              className="h-11 w-full text-sm font-semibold uppercase tracking-wide"
             >
-              <Mail />
-              Contact us
+              Support us
             </Button>
           </div>
         </SiteContainer>

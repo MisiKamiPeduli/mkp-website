@@ -1,68 +1,155 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { SiteContainer } from "@/components/layout/site-container";
+import { pastPrograms } from "@/lib/programs";
 import type { SponsorYear } from "@/lib/sponsors";
 
-// Tier colours; Partner NGO and Endorsed By get no dot.
-const tierColors: Record<string, string> = {
-  Diamond: "bg-sky-400",
-  Platinum: "bg-slate-400",
-  Gold: "bg-amber-400",
-  Silver: "bg-zinc-400",
-  Bronze: "bg-orange-600",
-  "Sub-Bronze": "bg-orange-800",
+// Higher tiers get larger, heavier type so the hierarchy reads at a glance.
+const tierStyles: Record<string, { marker: string; names: string }> = {
+  Diamond: {
+    marker: "rotate-45 rounded-[1px] bg-sky-400",
+    names: "font-heading text-xl leading-snug text-secondary-text sm:text-2xl",
+  },
+  Platinum: {
+    marker: "rounded-full bg-slate-400",
+    names: "font-heading text-lg leading-snug text-secondary-text sm:text-xl",
+  },
+  Gold: {
+    marker: "rounded-full bg-amber-400",
+    names: "text-base font-semibold text-secondary-text sm:text-lg",
+  },
+  Silver: {
+    marker: "rounded-full bg-zinc-400",
+    names: "text-base font-medium text-secondary-text",
+  },
+  Bronze: {
+    marker: "rounded-full bg-orange-600",
+    names: "text-sm text-foreground/80",
+  },
+  "Sub-Bronze": {
+    marker: "rounded-full bg-orange-800",
+    names: "text-sm text-muted-foreground",
+  },
 };
 
-function Group({ label, names, tier }: { label: string; names: string[]; tier?: string }) {
-  return (
-    <section>
-      <h4 className="relative inline-block font-sans text-base font-bold italic text-secondary-text">
-        {tier && tierColors[tier] && <span aria-hidden className={`absolute -left-4 top-1/2 size-2.5 -translate-y-1/2 rounded-full ${tierColors[tier]}`} />}
-        {label}
-      </h4>
-      <ul className="mt-2 space-y-1">
-        {names.map((name) => <li key={name} className="text-sm font-medium uppercase leading-6 tracking-wide text-secondary-text sm:text-base">{name}</li>)}
-      </ul>
-    </section>
-  );
+const eyebrow =
+  "text-[11px] font-semibold uppercase tracking-[0.15em] text-muted-foreground";
+
+// "Nias, North Sumatra" -> "Nias", matched by programme year.
+function placeFor(year: number) {
+  return pastPrograms
+    .find((program) => program.year === year)
+    ?.location.name.split(",")[0];
 }
 
 export function SponsorArchive({ years }: { years: SponsorYear[] }) {
   const [index, setIndex] = useState(0);
-  const go = (next: number) => setIndex((next + years.length) % years.length);
+  const active = years[index];
+  const place = placeFor(active.year);
 
   return (
-    <section id="sponsor-archive" aria-roledescription="carousel" aria-label="Partners and sponsors by year" className="relative isolate overflow-hidden border-y border-border bg-muted">
-      <Image src="/images/sponsors/slides-bg.jpg" alt="" fill sizes="100vw" className="-z-20 object-cover" />
+    <section
+      id="sponsor-archive"
+      aria-labelledby="sponsor-year-heading"
+      className="relative isolate overflow-hidden border-y border-border bg-muted"
+    >
+      <Image
+        src="/images/sponsors/slides-bg.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-20 object-cover"
+      />
       <div aria-hidden className="absolute inset-0 -z-10 bg-background/90" />
+
       <SiteContainer>
-        <div role="group" aria-label="Choose a year" className="flex flex-wrap justify-center gap-2 pt-10 sm:pt-12">
-          {years.map((year, i) => (
-            <button key={year.year} type="button" onClick={() => setIndex(i)} aria-current={i === index} className={`min-h-9 rounded-full border px-4 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${i === index ? "border-secondary bg-secondary text-secondary-foreground" : "border-border bg-background/80 text-secondary-text hover:border-secondary"}`}>{year.year}</button>
-          ))}
-        </div>
+        <div className="mx-auto max-w-4xl py-12 sm:py-16">
+          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-5 border-b-2 border-secondary pb-6">
+            <div aria-live="polite">
+              <p className={eyebrow}>Thank you to our supporters</p>
+              <h2
+                id="sponsor-year-heading"
+                className="mt-2 text-3xl font-bold text-secondary-text sm:text-4xl"
+              >
+                {active.year}
+                {place && (
+                  <>
+                    {" "}
+                    <span aria-hidden>·</span>{" "}
+                    <span className="font-normal italic">{place}</span>
+                  </>
+                )}
+              </h2>
+            </div>
 
-        <div className="mx-auto flex max-w-3xl items-start gap-2 pb-12 pt-8 sm:gap-6 sm:pb-16 sm:pt-10">
-          <button type="button" onClick={() => go(index - 1)} aria-label={`Previous year, ${years[(index - 1 + years.length) % years.length].year}`} className="mt-40 shrink-0 rounded-full p-2 text-secondary-text transition-colors hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"><ChevronLeft aria-hidden className="size-6" /></button>
-
-          <div className="min-w-0 flex-1 text-center" aria-live="polite">
-            {years.map((year, i) => (
-              <div key={year.year} role="group" aria-roledescription="slide" aria-label={`${year.year}, ${i + 1} of ${years.length}`} hidden={i !== index} className="slide-fade">
-                <h3 className="text-5xl font-bold tracking-[0.2em] text-secondary-text sm:text-6xl">{year.year}</h3>
-                <div aria-hidden className="mx-auto mt-5 h-0.5 w-12 bg-accent" />
-                <div className="mt-8 space-y-8">
-                  <Group label="Partner NGO" names={year.partners} />
-                  {year.tiers.map((tier) => <Group key={tier.name} label={`${tier.name} Sponsorship`} names={tier.sponsors} tier={tier.name} />)}
-                  <Group label="Endorsed By" names={year.endorsements} />
-                </div>
-              </div>
-            ))}
+            <div role="group" aria-label="Choose a year" className="flex flex-wrap gap-2">
+              {years.map((year, i) => (
+                <button
+                  key={year.year}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-pressed={i === index}
+                  aria-controls="sponsor-year-details"
+                  className={`min-h-9 cursor-pointer rounded-full border px-4 text-xs font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${
+                    i === index
+                      ? "border-secondary bg-secondary text-secondary-foreground"
+                      : "border-border bg-background text-secondary-text hover:border-secondary"
+                  }`}
+                >
+                  {year.year}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <button type="button" onClick={() => go(index + 1)} aria-label={`Next year, ${years[(index + 1) % years.length].year}`} className="mt-40 shrink-0 rounded-full p-2 text-secondary-text transition-colors hover:bg-background focus-visible:outline-2 focus-visible:outline-ring"><ChevronRight aria-hidden className="size-6" /></button>
+          <div id="sponsor-year-details" key={active.year} className="slide-fade">
+            <dl className="divide-y divide-border border-b border-border">
+              {active.tiers.map((tier) => {
+                const style = tierStyles[tier.name];
+                return (
+                  <div
+                    key={tier.name}
+                    className="grid gap-3 py-5 sm:grid-cols-[9rem_1fr] sm:items-baseline sm:gap-6"
+                  >
+                    <dt className={`flex items-center gap-2.5 ${eyebrow}`}>
+                      <span aria-hidden className={`size-2 shrink-0 ${style?.marker ?? "rounded-full bg-border"}`} />
+                      {tier.name}
+                    </dt>
+                    <dd>
+                      <ul className={`flex flex-wrap gap-x-6 gap-y-1.5 ${style?.names ?? "text-sm"}`}>
+                        {tier.sponsors.map((sponsor) => (
+                          <li key={sponsor}>{sponsor}</li>
+                        ))}
+                      </ul>
+                    </dd>
+                  </div>
+                );
+              })}
+            </dl>
+
+            <div className="mt-6 grid gap-6 rounded-lg bg-muted p-6 sm:grid-cols-2 sm:gap-10">
+              <div>
+                <h3 className={`font-sans ${eyebrow}`}>
+                  {active.partners.length > 1 ? "Partner NGOs" : "Partner NGO"} on the ground
+                </h3>
+                <ul className="mt-3 space-y-1 text-sm text-foreground/85">
+                  {active.partners.map((partner) => (
+                    <li key={partner}>{partner}</li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h3 className={`font-sans ${eyebrow}`}>Endorsed by</h3>
+                <ul className="mt-3 space-y-1 text-sm text-foreground/85">
+                  {active.endorsements.map((endorsement) => (
+                    <li key={endorsement}>{endorsement}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
         </div>
       </SiteContainer>
     </section>
