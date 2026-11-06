@@ -6,6 +6,7 @@ import { SiteContainer } from "@/components/layout/site-container";
 import { ButtonLink, buttonClasses } from "@/components/ui/button";
 import { Polaroid } from "@/components/ui/polaroid";
 import { pastTeams } from "@/lib/team";
+import { MemberPhoto } from "./member-photo";
 
 // One face from each past team, so the preview spans MKP's years.
 const previewMembers = pastTeams
@@ -55,14 +56,12 @@ export function AboutIntro() {
               <div className="flex items-center gap-3">
                 <div aria-hidden className="flex shrink-0 -space-x-3">
                   {previewMembers.map((member) => (
-                    <Image
+                    <span
                       key={member.name}
-                      src={member.image}
-                      alt=""
-                      width={36}
-                      height={36}
-                      className="size-9 shrink-0 rounded-full bg-background object-cover ring-2 ring-muted"
-                    />
+                      className="relative size-9 shrink-0 overflow-hidden rounded-full bg-background ring-2 ring-muted"
+                    >
+                      <MemberPhoto member={member} alt="" size={36} />
+                    </span>
                   ))}
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground ring-2 ring-muted">
                     <Plus className="size-4" />

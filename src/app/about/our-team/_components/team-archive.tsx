@@ -1,9 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { SiteContainer } from "@/components/layout/site-container";
 import type { PastTeam, PastTeamMember } from "@/lib/team";
+import { MemberPhoto } from "../../_components/member-photo";
 
 const DIRECTORS = "Co-Project Directors";
 const slugify = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -72,7 +72,7 @@ export function TeamArchive({ teams }: { teams: PastTeam[] }) {
                           <li key={member.name} className="flex items-center gap-4">
                             <div className={`relative shrink-0 overflow-hidden rounded-full bg-muted ${lead ? "size-24" : "size-16"}`}>
                               {member.image ? (
-                                <Image src={member.image} alt={`Portrait of ${member.name}`} fill sizes={lead ? "96px" : "64px"} className="object-cover" />
+                                <MemberPhoto member={{ ...member, image: member.image }} alt={`Portrait of ${member.name}`} size={lead ? 96 : 64} />
                               ) : (
                                 <span aria-hidden className="absolute inset-0 flex items-center justify-center text-sm font-medium text-muted-foreground">{initials(member.name)}</span>
                               )}

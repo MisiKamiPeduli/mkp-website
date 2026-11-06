@@ -5,7 +5,7 @@ import { TeamArchive } from "./_components/team-archive";
 
 export const metadata: Metadata = {
   title: "Our Team",
-  description: "Meet the students who led MKP’s past programmes. Browse the 2024, 2021, 2020, and 2019 teams.",
+  description: "Meet the students leading MKP’s 2027 programme and the teams behind past programmes. Browse the 2027, 2024, 2021, 2020, and 2019 teams.",
 };
 
 export default function OurTeamPage() {
