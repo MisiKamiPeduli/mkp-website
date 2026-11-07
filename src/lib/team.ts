@@ -113,9 +113,9 @@ export const pastTeams: PastTeam[] = [
         "role": "Member",
         "division": "Education",
         "study": "Data Science and Analytics ’28",
-        "image": "/images/team/2027/Neezar Akbar Lumban Tobing-Chemical Engineering 28'.jpg",
-        "imagePosition": "51.5% 33.9%",
-        "imageScale": 1.97
+        "image": "/images/team/2027/Elysia Selena Alston-Data Science and Analytics 28'.jpg",
+        "imagePosition": "54.1% 47.7%",
+        "imageScale": 1.92
       },
       {
         "name": "Klara Sciffi Richie Gavrila",
@@ -131,9 +131,9 @@ export const pastTeams: PastTeam[] = [
         "role": "Member",
         "division": "Education",
         "study": "Chemical Engineering ’28",
-        "image": "/images/team/2027/Elysia Selena Alston-Data Science and Analytics 28'.jpg",
-        "imagePosition": "54.1% 47.7%",
-        "imageScale": 1.92
+        "image": "/images/team/2027/Neezar Akbar Lumban Tobing-Chemical Engineering 28'.jpg",
+        "imagePosition": "51.5% 33.9%",
+        "imageScale": 1.97
       },
       {
         "name": "Jansen Ken Pegrasio",
