@@ -157,15 +157,19 @@ export const pastTeams: PastTeam[] = [
         "name": "Merry Rosalie",
         "role": "Member",
         "division": "Technology",
-        "study": "Study details unavailable",
-        "image": null
+        "study": "Master of Computing ’28",
+        "image": "/images/team/2027/Merry Rosalie-Master of Computing 28'.jpg",
+        "imagePosition": "51.5% 40.8%",
+        "imageScale": 3.95
       },
       {
         "name": "Clarissa Joyceline Edi Surya",
         "role": "Member",
         "division": "Technology",
-        "study": "Study details unavailable",
-        "image": null
+        "study": "Civil Engineering ’29",
+        "image": "/images/team/2027/Clarissa Joyceline Edi Surya-Civil Engineering 29'.jpg",
+        "imagePosition": "53.2% 34.2%",
+        "imageScale": 2.73
       },
       {
         "name": "Puspa Tania Zahrani",
@@ -197,8 +201,8 @@ export const pastTeams: PastTeam[] = [
         "name": "Michael Milo Valentino",
         "role": "Executive Member",
         "division": "Public Relations",
-        "study": "Sustainable and Green Finance ’27",
-        "image": "/images/team/2027/Michael Milo Valentino- Sustainable and Green Finance 27'.jpg",
+        "study": "Master of Sustainable and Green Finance ’27",
+        "image": "/images/team/2027/Michael Milo Valentino-Master of Sustainable and Green Finance 27'.jpg",
         "imagePosition": "58.5% 26.3%",
         "imageScale": 1.64
       },
@@ -206,8 +210,10 @@ export const pastTeams: PastTeam[] = [
         "name": "Eunice Felicia Jo",
         "role": "Executive Member",
         "division": "Public Relations",
-        "study": "Study details unavailable",
-        "image": null
+        "study": "Communications and New Media ’28",
+        "image": "/images/team/2027/Eunice Felicia Jo-Communications and New Media 28'.jpg",
+        "imagePosition": "54.7% 35.3%",
+        "imageScale": 2.34
       }
     ]
   },
