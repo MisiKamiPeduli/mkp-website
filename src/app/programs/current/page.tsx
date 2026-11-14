@@ -15,7 +15,12 @@ export const metadata: Metadata = {
     "Discover MKP 2027 in Way Kambas, Lampung: our education, technology, and media programmes, where we are in the timeline, and ways to get involved.",
 };
 
-const partners = ["Sekolah Alam Indonesia", "ALeRT", "Desa Taman Fajar"];
+const partners = [
+  "Sekolah Alam Indonesia",
+  "ALeRT",
+  "Desa Taman Fajar",
+  "Yayasan Harapan Dalam Halaman",
+];
 
 const milestones = [
   {
@@ -83,7 +88,8 @@ export default function CurrentProgramsPage() {
               </h2>
               <p className="mt-6 max-w-lg text-sm leading-relaxed text-foreground/80 sm:text-base">
                 This year, MKP is heading to Way Kambas, Lampung. Together with
-                Sekolah Alam Indonesia, ALeRT, and Desa Taman Fajar, we&apos;re
+                Sekolah Alam Indonesia, ALeRT, Desa Taman Fajar, and Yayasan
+                Harapan Dalam Halaman, we&apos;re
                 running programmes in <strong>education</strong> and{" "}
                 <strong>technology</strong>, and documenting the journey through{" "}
                 <strong>media</strong>.
